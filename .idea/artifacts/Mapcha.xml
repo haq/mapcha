@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="Mapcha">
+    <output-path>D:/1.8.8/plugins</output-path>
+    <root id="archive" name="Mapcha.jar">
+      <element id="module-output" name="Mapcha" />
+    </root>
+  </artifact>
+</component>
