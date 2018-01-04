@@ -27,8 +27,8 @@ public class SettingsFile extends CustomFile {
         FileReader fr = new FileReader(getFile());
         JsonObject jsonObject = getGson().fromJson(fr, JsonObject.class);
 
-        Util.TEXT = jsonObject.has("text") && jsonObject.get("text").getAsBoolean();
-        Util.MATH = jsonObject.has("math") && jsonObject.get("math").getAsBoolean();
+        /*Util.TEXT = jsonObject.has("text") && jsonObject.get("text").getAsBoolean();
+        Util.MATH = jsonObject.has("math") && jsonObject.get("math").getAsBoolean();*/
 
         fr.close();
 
@@ -39,8 +39,8 @@ public class SettingsFile extends CustomFile {
         FileWriter fw = new FileWriter(getFile());
 
         JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty("text", Util.TEXT);
-        jsonObject.addProperty("math", Util.MATH);
+  /*      jsonObject.addProperty("text", Util.TEXT);
+        jsonObject.addProperty("math", Util.MATH);*/
 
         fw.write(getGson().toJson(jsonObject));
         fw.close();

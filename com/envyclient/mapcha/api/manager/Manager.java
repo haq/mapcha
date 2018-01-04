@@ -1,16 +1,16 @@
 package com.envyclient.mapcha.api.manager;
 
-import java.util.ArrayList;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public abstract class Manager<T> {
 
-    private ArrayList<T> contents = new ArrayList<T>();
+    private CopyOnWriteArrayList<T> contents = new CopyOnWriteArrayList<T>();
 
-    public ArrayList<T> getContents() {
+    public CopyOnWriteArrayList<T> getContents() {
         return contents;
     }
 
-    public void setContents(ArrayList<T> contents) {
+    public void setContents(CopyOnWriteArrayList<T> contents) {
         this.contents = contents;
     }
 }

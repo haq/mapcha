@@ -2,6 +2,7 @@ package com.envyclient.mapcha.impl.commands.subcommands;
 
 import com.envyclient.mapcha.Mapcha;
 import com.envyclient.mapcha.api.subcommand.SubCommand;
+import com.envyclient.mapcha.util.Util;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -21,21 +22,21 @@ public class ReloadSubCommand extends SubCommand {
 
             if (player.hasPermission("npcm.reload")) {
                 if (Mapcha.INSTANCE.FILE_MANAGER.loadFiles())
-                    player.sendMessage(Mapcha.INSTANCE.PREFIX + " File reloaded.");
+                    player.sendMessage(Util.PREFIX + " File reloaded.");
                 else
-                    player.sendMessage(Mapcha.INSTANCE.PREFIX + " Error loading file, please check console.");
+                    player.sendMessage(Util.PREFIX + " Error loading file, please check console.");
                 return true;
             }
 
-            player.sendMessage(Mapcha.INSTANCE.PREFIX + " You do not have permission to use this command.");
+            player.sendMessage(Util.PREFIX + " You do not have permission to use this command.");
             return true;
         }
 
 
         if (Mapcha.INSTANCE.FILE_MANAGER.loadFiles())
-            commandSender.sendMessage(Mapcha.INSTANCE.PREFIX + " File reloaded.");
+            commandSender.sendMessage(Util.PREFIX + " File reloaded.");
         else
-            commandSender.sendMessage(Mapcha.INSTANCE.PREFIX + " Error loading file, please check console.");
+            commandSender.sendMessage(Util.PREFIX + " Error loading file, please check console.");
 
 
         return true;

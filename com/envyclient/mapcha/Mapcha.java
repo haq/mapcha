@@ -1,9 +1,11 @@
 package com.envyclient.mapcha;
 
 import com.envyclient.mapcha.impl.commands.MapchaCommand;
-import com.envyclient.mapcha.impl.events.JoinEvent;
+import com.envyclient.mapcha.impl.events.ChatEvent;
+import com.envyclient.mapcha.impl.events.JoinAndLeaveEvent;
 import com.envyclient.mapcha.impl.events.MapEvent;
 import com.envyclient.mapcha.impl.managers.CustomFileManager;
+import com.envyclient.mapcha.impl.managers.CustomPlayerManager;
 import com.envyclient.mapcha.impl.managers.SubCommandManager;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -14,11 +16,10 @@ public class Mapcha extends JavaPlugin {
 
     public static Mapcha INSTANCE;
 
-    public String NAME = "NCPAction";
-    public String PREFIX = "" + ChatColor.WHITE + "[" + ChatColor.GREEN + NAME + ChatColor.WHITE + "]";
 
     public CustomFileManager FILE_MANAGER;
     public SubCommandManager SUB_COMMAND_MANAGER;
+    public CustomPlayerManager PLAYER_MANAGER;
 
     @Override
     public void onEnable() {
@@ -26,6 +27,7 @@ public class Mapcha extends JavaPlugin {
 
         FILE_MANAGER = new CustomFileManager(this);
         SUB_COMMAND_MANAGER = new SubCommandManager();
+        PLAYER_MANAGER = new CustomPlayerManager();
 
         loadFiles();
         registerCommands();
@@ -51,7 +53,8 @@ public class Mapcha extends JavaPlugin {
 
     private void registerEvents() {
         PluginManager pluginManager = Bukkit.getPluginManager();
-        pluginManager.registerEvents(new JoinEvent(), this);
+        pluginManager.registerEvents(new JoinAndLeaveEvent(), this);
         pluginManager.registerEvents(new MapEvent(), this);
+        pluginManager.registerEvents(new ChatEvent(), this);
     }
 }

@@ -6,6 +6,7 @@ import com.envyclient.mapcha.api.manager.Manager;
 import com.envyclient.mapcha.api.subcommand.SubCommand;
 import com.envyclient.mapcha.impl.commands.subcommands.HelpSubCommand;
 import com.envyclient.mapcha.impl.commands.subcommands.ReloadSubCommand;
+import com.envyclient.mapcha.util.Util;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
@@ -28,12 +29,12 @@ public class SubCommandManager extends Manager<SubCommand> {
 
             if (subCommand != null) {
                 if (!subCommand.onCommand(command, commandSender, args))
-                    commandSender.sendMessage(Mapcha.INSTANCE.PREFIX + subCommand.getUsage(command));
+                    commandSender.sendMessage(Util.PREFIX + subCommand.getUsage(command));
             } else {
-                commandSender.sendMessage(Mapcha.INSTANCE.PREFIX + " Try " + command.getName() + " help.");
+                commandSender.sendMessage(Util.PREFIX + " Try " + command.getName() + " help.");
             }
         } else {
-            commandSender.sendMessage(Mapcha.INSTANCE.PREFIX + " Try " + command.getName() + " help.");
+            commandSender.sendMessage(Util.PREFIX + " Try " + command.getName() + " help.");
         }
 
         return true;
