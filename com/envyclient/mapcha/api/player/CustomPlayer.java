@@ -12,17 +12,18 @@ import java.text.SimpleDateFormat;
 public class CustomPlayer {
 
     private Player player;
-    private String text;
+    private String captcha;
     private ItemStack[] contents;
     private ItemStack[] armour;
     private int tries;
     private long lastTime;
 
-    public CustomPlayer(Player player, String text, ItemStack[] contents, ItemStack[] armour) {
+    public CustomPlayer(Player player, String captcha) {
         this.player = player;
-        this.text = text;
-        this.contents = contents;
-        this.armour = armour;
+        this.captcha = captcha;
+
+        contents = player.getInventory().getContents();
+        armour = player.getInventory().getArmorContents();
 
         lastTime = System.currentTimeMillis();
 
@@ -62,7 +63,7 @@ public class CustomPlayer {
 
         g.setFont(new Font("Arial", Font.BOLD, 40));
         g.setColor(Color.WHITE);
-        g.drawString(text, (int) ((image.getWidth() - g.getFontMetrics().getStringBounds(text, g).getWidth()) / 2), 105);
+        g.drawString(captcha, (int) ((image.getWidth() - g.getFontMetrics().getStringBounds(captcha, g).getWidth()) / 2), 105);
 
         return image;
 
@@ -83,8 +84,8 @@ public class CustomPlayer {
         return this;
     }
 
-    public String getText() {
-        return text;
+    public String getCaptcha() {
+        return captcha;
     }
 
     public Player getPlayer() {

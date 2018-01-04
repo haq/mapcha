@@ -17,7 +17,7 @@ public class ChatEvent implements Listener {
 
         if (player != null) {
 
-            if (!event.getMessage().equals(player.getText())) {
+            if (!event.getMessage().equals(player.getCaptcha())) {
                 if (player.getTries() >= (Util.CAPTCHA_TRIES - 1)) {
                     Bukkit.getScheduler().runTask(Mapcha.INSTANCE, () -> player.getPlayer().kickPlayer(Util.PREFIX + " " + Util.CAPTCHA_FAIL));
                 } else {

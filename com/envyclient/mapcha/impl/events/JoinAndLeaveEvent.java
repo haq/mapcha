@@ -22,7 +22,7 @@ public class JoinAndLeaveEvent implements Listener {
         if (event.getPlayer().hasPermission("mapcha.bypass"))
             return;
 
-        CustomPlayer customPlayer = new CustomPlayer(event.getPlayer(), generateRandomString(Util.CAPTCHA_LENGTH), event.getPlayer().getInventory().getContents(), event.getPlayer().getInventory().getArmorContents()).cleanPlayer();
+        CustomPlayer customPlayer = new CustomPlayer(event.getPlayer(), generateRandomString(Util.CAPTCHA_LENGTH)).cleanPlayer();
 
         ItemStack itemStack = new ItemStack(Material.EMPTY_MAP);
         ItemMeta itemMeta = itemStack.getItemMeta();
@@ -52,9 +52,8 @@ public class JoinAndLeaveEvent implements Listener {
     private String generateRandomString(int length) {
         String charset = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
         StringBuilder random = new StringBuilder();
-        for (int i = 0; i < length; i++) {
+        for (int i = 0; i < length; i++)
             random.append(charset.charAt(new Random().nextInt(charset.length() - 1)));
-        }
         return random.toString();
     }
 
