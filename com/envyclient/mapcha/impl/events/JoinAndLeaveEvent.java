@@ -19,6 +19,9 @@ public class JoinAndLeaveEvent implements Listener {
     @EventHandler
     public void onJoin(PlayerJoinEvent event) {
 
+        if (event.getPlayer().hasPermission("mapcha.reload"))
+            return;
+
         CustomPlayer customPlayer = new CustomPlayer(event.getPlayer(), generateRandomString(Util.CAPTCHA_LENGTH), event.getPlayer().getInventory().getContents(), event.getPlayer().getInventory().getArmorContents()).cleanPlayer();
 
         ItemStack itemStack = new ItemStack(Material.EMPTY_MAP);

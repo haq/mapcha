@@ -28,7 +28,10 @@ public class CustomPlayer {
 
         tries = 0;
 
-        player.getServer().getScheduler().scheduleSyncDelayedTask(Mapcha.INSTANCE, () -> player.getPlayer().kickPlayer(Util.PREFIX + " " + Util.CAPTCHA_FAIL), Util.CAPTCHA_TIME_LIMIT * 20);
+        player.getServer().getScheduler().scheduleSyncDelayedTask(Mapcha.INSTANCE, () -> {
+            if (Mapcha.INSTANCE.PLAYER_MANAGER.getPlayer(player) != null)
+                player.getPlayer().kickPlayer(Util.PREFIX + " " + Util.CAPTCHA_FAIL);
+        }, Util.CAPTCHA_TIME_LIMIT * 20);
 
     }
 

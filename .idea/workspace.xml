@@ -45,17 +45,18 @@
         <option value="$PROJECT_DIR$/com/envyclient/mapcha/impl/events/JoinEvent.java" />
         <option value="$PROJECT_DIR$/com/envyclient/mapcha/api/manager/Manager.java" />
         <option value="$PROJECT_DIR$/com/envyclient/mapcha/impl/commands/subcommands/HelpSubCommand.java" />
-        <option value="$PROJECT_DIR$/com/envyclient/mapcha/impl/commands/subcommands/ReloadSubCommand.java" />
         <option value="$PROJECT_DIR$/com/envyclient/mapcha/impl/managers/SubCommandManager.java" />
         <option value="$PROJECT_DIR$/com/envyclient/mapcha/util/Timer.java" />
-        <option value="$PROJECT_DIR$/com/envyclient/mapcha/impl/events/JoinAndLeaveEvent.java" />
         <option value="$PROJECT_DIR$/com/envyclient/mapcha/impl/events/MapEvent.java" />
-        <option value="$PROJECT_DIR$/com/envyclient/mapcha/api/player/CustomPlayer.java" />
         <option value="$PROJECT_DIR$/com/envyclient/mapcha/impl/managers/CustomFileManager.java" />
         <option value="$PROJECT_DIR$/com/envyclient/mapcha/util/Util.java" />
         <option value="$PROJECT_DIR$/com/envyclient/mapcha/impl/files/SettingsFile.java" />
         <option value="$PROJECT_DIR$/com/envyclient/mapcha/Mapcha.java" />
         <option value="$PROJECT_DIR$/com/envyclient/mapcha/impl/events/ChatEvent.java" />
+        <option value="$PROJECT_DIR$/com/envyclient/mapcha/api/player/CustomPlayer.java" />
+        <option value="$PROJECT_DIR$/com/envyclient/mapcha/impl/commands/subcommands/ReloadSubCommand.java" />
+        <option value="$PROJECT_DIR$/com/envyclient/mapcha/impl/events/JoinAndLeaveEvent.java" />
+        <option value="$PROJECT_DIR$/plugin.yml" />
       </list>
     </option>
   </component>
@@ -65,7 +66,7 @@
     <detection-done>true</detection-done>
     <sorting>DEFINITION_ORDER</sorting>
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="310" />
     <option name="y" value="45" />
     <option name="width" value="1400" />
@@ -245,15 +246,15 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1515021468410</updated>
-      <workItem from="1515021469676" duration="10800000" />
+      <workItem from="1515021469676" duration="11290000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="10800000" />
+    <option name="totallyTimeSpent" value="11290000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1176" extended-state="7" />
+    <frame x="-8" y="-8" width="1936" height="1176" extended-state="6" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
@@ -330,22 +331,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/com/envyclient/mapcha/impl/commands/subcommands/HelpSubCommand.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="16" column="38" lean-forward="false" selection-start-line="16" selection-start-column="34" selection-end-line="16" selection-end-column="38" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/com/envyclient/mapcha/impl/commands/subcommands/ReloadSubCommand.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="518">
-          <caret line="40" column="0" lean-forward="true" selection-start-line="40" selection-start-column="0" selection-end-line="40" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/com/envyclient/mapcha/impl/managers/SubCommandManager.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="408">
@@ -410,40 +395,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/com/envyclient/mapcha/api/player/CustomPlayer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="182">
-          <caret line="11" column="24" lean-forward="false" selection-start-line="11" selection-start-column="24" selection-end-line="11" selection-end-column="24" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#3197#3198#0" expanded="true" />
-            <element signature="e#3224#3225#0" expanded="true" />
-            <element signature="e#3257#3258#0" expanded="true" />
-            <element signature="e#3286#3287#0" expanded="true" />
-            <element signature="e#3315#3316#0" expanded="true" />
-            <element signature="e#3343#3344#0" expanded="true" />
-            <element signature="e#3382#3383#0" expanded="true" />
-            <element signature="e#3416#3417#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/com/envyclient/mapcha/impl/managers/CustomPlayerManager.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="7" column="0" lean-forward="true" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/com/envyclient/mapcha/Mapcha.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="28" column="51" lean-forward="true" selection-start-line="28" selection-start-column="51" selection-end-line="28" selection-end-column="51" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/com/envyclient/mapcha/impl/files/SettingsFile.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="457">
@@ -465,17 +416,9 @@
         <state relative-caret-position="187">
           <caret line="22" column="38" lean-forward="true" selection-start-line="22" selection-start-column="38" selection-end-line="22" selection-end-column="38" />
           <folding>
-            <element signature="e#803#1224#0" expanded="true" />
-            <element signature="e#1223#1224#0" expanded="true" />
+            <element signature="e#803#1224#0" expanded="false" />
+            <element signature="e#1223#1224#0" expanded="false" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/com/envyclient/mapcha/impl/events/JoinAndLeaveEvent.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="29" column="62" lean-forward="false" selection-start-line="29" selection-start-column="62" selection-end-line="29" selection-end-column="62" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -487,10 +430,66 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/com/envyclient/mapcha/impl/managers/CustomPlayerManager.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="17" column="47" lean-forward="false" selection-start-line="17" selection-start-column="41" selection-end-line="17" selection-end-column="47" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/com/envyclient/mapcha/api/player/CustomPlayer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="425">
+          <caret line="32" column="85" lean-forward="true" selection-start-line="32" selection-start-column="85" selection-end-line="32" selection-end-column="85" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/com/envyclient/mapcha/impl/commands/subcommands/HelpSubCommand.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="17" column="37" lean-forward="false" selection-start-line="17" selection-start-column="37" selection-end-line="17" selection-end-column="37" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/com/envyclient/mapcha/Mapcha.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="306">
+          <caret line="28" column="51" lean-forward="true" selection-start-line="28" selection-start-column="51" selection-end-line="28" selection-end-column="51" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/com/envyclient/mapcha/impl/commands/subcommands/ReloadSubCommand.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="22" column="51" lean-forward="false" selection-start-line="22" selection-start-column="51" selection-end-line="22" selection-end-column="51" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/com/envyclient/mapcha/util/Util.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="306">
           <caret line="23" column="4" lean-forward="true" selection-start-line="23" selection-start-column="4" selection-end-line="23" selection-end-column="57" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/plugin.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="6" column="10" lean-forward="false" selection-start-line="6" selection-start-column="10" selection-end-line="6" selection-end-column="10" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/com/envyclient/mapcha/impl/events/JoinAndLeaveEvent.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="21" column="56" lean-forward="false" selection-start-line="21" selection-start-column="56" selection-end-line="21" selection-end-column="56" />
           <folding />
         </state>
       </provider>

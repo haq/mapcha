@@ -20,7 +20,7 @@ public class ReloadSubCommand extends SubCommand {
 
             Player player = (Player) commandSender;
 
-            if (player.hasPermission("npcm.reload")) {
+            if (player.hasPermission("mapcha.reload")) {
                 if (Mapcha.INSTANCE.FILE_MANAGER.loadFiles())
                     player.sendMessage(Util.PREFIX + " File reloaded.");
                 else
