@@ -16,7 +16,6 @@ public class Mapcha extends JavaPlugin {
 
     public static Mapcha INSTANCE;
 
-
     public CustomFileManager FILE_MANAGER;
     public SubCommandManager SUB_COMMAND_MANAGER;
     public CustomPlayerManager PLAYER_MANAGER;
@@ -25,7 +24,7 @@ public class Mapcha extends JavaPlugin {
     public void onEnable() {
         INSTANCE = this;
 
-        FILE_MANAGER = new CustomFileManager(this);
+        FILE_MANAGER = new CustomFileManager();
         SUB_COMMAND_MANAGER = new SubCommandManager();
         PLAYER_MANAGER = new CustomPlayerManager();
 

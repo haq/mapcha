@@ -12,12 +12,14 @@ public class Util {
     public static String MAIN_COLOR = ChatColor.COLOR_CHAR + "a";
     public static String SECONDARY_COLOR = ChatColor.COLOR_CHAR + "f";
 
-    public static String NAME = "Mapcha";
+    public static String NAME = Mapcha.INSTANCE.getName();
     public static String PREFIX = SECONDARY_COLOR + "[" + MAIN_COLOR + NAME + SECONDARY_COLOR + "]";
 
     public static int CAPTCHA_TRIES = 3;
-    public static int CAPTCHA_LENGTH = 5;
-    public static String CAPTCHA_SUCESS = "Captcha solved!";
+    public static final int CAPTCHA_LENGTH = 4;
+    public static int CAPTCHA_TIME_LIMIT = 8;
+
+    public static String CAPTCHA_SUCCESS = "Captcha solved!";
     public static String CAPTCHA_RETRY = "Captcha failed, please try again. ({TRIES}/{MAX_TRIES})";
     public static String CAPTCHA_FAIL = "Wrong captcha!";
 

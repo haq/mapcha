@@ -4,6 +4,7 @@ import com.envyclient.mapcha.api.file.CustomFile;
 import com.envyclient.mapcha.util.Util;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import net.md_5.bungee.api.ChatColor;
 
 import java.io.File;
 import java.io.FileReader;
@@ -27,11 +28,35 @@ public class SettingsFile extends CustomFile {
         FileReader fr = new FileReader(getFile());
         JsonObject jsonObject = getGson().fromJson(fr, JsonObject.class);
 
-        /*Util.TEXT = jsonObject.has("text") && jsonObject.get("text").getAsBoolean();
-        Util.MATH = jsonObject.has("math") && jsonObject.get("math").getAsBoolean();*/
+        if (jsonObject.has("main_color"))
+            Util.MAIN_COLOR = jsonObject.get("main_color").getAsString().replace("&", "" + ChatColor.COLOR_CHAR);
+
+        if (jsonObject.has("secondary_color"))
+            Util.SECONDARY_COLOR = jsonObject.get("secondary_color").getAsString().replace("&", "" + ChatColor.COLOR_CHAR);
+
+        Util.PREFIX = Util.SECONDARY_COLOR + "[" + Util.MAIN_COLOR + Util.NAME + Util.SECONDARY_COLOR + "]";
+
+
+        if (jsonObject.has("captcha_success_message"))
+            Util.CAPTCHA_SUCCESS = jsonObject.get("captcha_success_message").getAsString().replace("&", "" + ChatColor.COLOR_CHAR);
+
+
+        if (jsonObject.has("captcha_retry_message"))
+            Util.CAPTCHA_RETRY = jsonObject.get("captcha_retry_message").getAsString().replace("&", "" + ChatColor.COLOR_CHAR);
+
+
+        if (jsonObject.has("captcha_retry_fail"))
+            Util.CAPTCHA_FAIL = jsonObject.get("captcha_retry_fail").getAsString().replace("&", "" + ChatColor.COLOR_CHAR);
+
+
+        if (jsonObject.has("captcha_tries"))
+            Util.CAPTCHA_TRIES = jsonObject.get("captcha_tries").getAsInt();
+
+        if (jsonObject.has("captcha_time_limit"))
+            Util.CAPTCHA_TIME_LIMIT = jsonObject.get("captcha_time_limit").getAsInt();
+
 
         fr.close();
-
     }
 
     @Override
@@ -39,8 +64,13 @@ public class SettingsFile extends CustomFile {
         FileWriter fw = new FileWriter(getFile());
 
         JsonObject jsonObject = new JsonObject();
-  /*      jsonObject.addProperty("text", Util.TEXT);
-        jsonObject.addProperty("math", Util.MATH);*/
+        jsonObject.addProperty("main_color", Util.MAIN_COLOR.replaceAll("" + ChatColor.COLOR_CHAR, "&"));
+        jsonObject.addProperty("secondary_color", Util.SECONDARY_COLOR.replaceAll("" + ChatColor.COLOR_CHAR, "&"));
+        jsonObject.addProperty("captcha_tries", Util.CAPTCHA_TRIES);
+        jsonObject.addProperty("captcha_time_limit", Util.CAPTCHA_TIME_LIMIT);
+        jsonObject.addProperty("captcha_success_message", Util.CAPTCHA_SUCCESS.replaceAll("" + ChatColor.COLOR_CHAR, "&"));
+        jsonObject.addProperty("captcha_retry_message", Util.CAPTCHA_RETRY.replaceAll("" + ChatColor.COLOR_CHAR, "&"));
+        jsonObject.addProperty("captcha_retry_fail", Util.CAPTCHA_FAIL.replaceAll("" + ChatColor.COLOR_CHAR, "&"));
 
         fw.write(getGson().toJson(jsonObject));
         fw.close();

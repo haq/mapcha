@@ -3,6 +3,7 @@ package com.envyclient.mapcha.impl.managers;
 import com.envyclient.mapcha.api.file.CustomFile;
 import com.envyclient.mapcha.api.manager.Manager;
 import com.envyclient.mapcha.impl.files.SettingsFile;
+import com.envyclient.mapcha.util.Util;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -12,24 +13,19 @@ import java.io.IOException;
 
 public class CustomFileManager extends Manager<CustomFile> {
 
-    private File directory;
-    private Gson gson;
 
-    public CustomFileManager(JavaPlugin javaPlugin) {
-        directory = new File(javaPlugin.getDataFolder() + "/");
-        gson = new GsonBuilder().setPrettyPrinting().create();
-        makeDirectory();
-        registerFiles();
+    public CustomFileManager() {
+        makeDirectory(Util.PLUGIN_DIRECTORY);
+        registerFiles(Util.GSON, Util.PLUGIN_DIRECTORY);
     }
 
-
-    private void makeDirectory() {
+    private void makeDirectory(File directory) {
         if (!directory.exists())
             directory.mkdirs();
     }
 
-    private void registerFiles() {
-        getContents().add(new SettingsFile(gson, new File(directory, "settings.json")));
+    private void registerFiles(Gson gson, File directory) {
+        getContents().add(new SettingsFile(Util.GSON, new File(directory, "settings.json")));
     }
 
     public boolean loadFiles() {
@@ -61,6 +57,5 @@ public class CustomFileManager extends Manager<CustomFile> {
         }
         return null;
     }
-
 
 }
