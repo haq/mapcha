@@ -5,6 +5,7 @@ import com.envyclient.mapcha.api.player.CustomPlayer;
 import com.envyclient.mapcha.util.Util;
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
@@ -16,7 +17,7 @@ import java.util.Random;
 
 public class JoinAndLeaveEvent implements Listener {
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.LOWEST)
     public void onJoin(PlayerJoinEvent event) {
 
         if (event.getPlayer().hasPermission("mapcha.bypass"))

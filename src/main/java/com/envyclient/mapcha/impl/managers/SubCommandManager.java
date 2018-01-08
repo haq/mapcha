@@ -1,7 +1,5 @@
 package com.envyclient.mapcha.impl.managers;
 
-
-import com.envyclient.mapcha.Mapcha;
 import com.envyclient.mapcha.api.manager.Manager;
 import com.envyclient.mapcha.api.subcommand.SubCommand;
 import com.envyclient.mapcha.impl.commands.subcommands.HelpSubCommand;

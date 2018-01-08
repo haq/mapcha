@@ -47,7 +47,7 @@ public class Mapcha extends JavaPlugin {
     }
 
     private void registerCommands() {
-        getCommand("mapcha").setExecutor(new MapchaCommand());
+        getCommand(getName()).setExecutor(new MapchaCommand());
     }
 
     private void registerEvents() {
