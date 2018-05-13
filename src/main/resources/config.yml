@@ -1,0 +1,5 @@
+captcha_tries: 3
+captcha_time_limit: 10
+captcha_success_message: "Captcha &asolved!"
+captcha_retry_message: "Captcha &efailed, &rplease try again. ({CURRENT_TRIES}/{MAX_TRIES})"
+captcha_fail_message: "Captcha &cfailed!"

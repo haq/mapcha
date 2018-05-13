@@ -1,7 +1,7 @@
 package me.ihaq.mapcha.player;
 
 import me.ihaq.mapcha.Mapcha;
-import me.ihaq.mapcha.util.Util;
+import me.ihaq.mapcha.MapchaConfig;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
@@ -13,12 +13,13 @@ public class CaptchaPlayer {
 
     private Player player;
     private String captcha;
+
     private ItemStack[] contents;
     private ItemStack[] armour;
     private int tries;
     private long lastTime;
 
-    public CaptchaPlayer(Player player, String captcha) {
+    public CaptchaPlayer(Player player, String captcha, Mapcha mapcha) {
         this.player = player;
         this.captcha = captcha;
 
@@ -26,14 +27,12 @@ public class CaptchaPlayer {
         armour = player.getInventory().getArmorContents();
 
         lastTime = System.currentTimeMillis();
-
         tries = 0;
 
-        player.getServer().getScheduler().scheduleSyncDelayedTask(Mapcha.INSTANCE, () -> {
-            if (Mapcha.INSTANCE.PLAYER_MANAGER.getPlayer(player) != null)
-                player.getPlayer().kickPlayer(Util.PREFIX + " " + Util.CAPTCHA_FAIL);
-        }, Util.CAPTCHA_TIME_LIMIT * 20);
-
+        player.getServer().getScheduler().scheduleSyncDelayedTask(mapcha, () -> {
+            if (mapcha.getPlayerManager().getPlayer(player) != null)
+                player.getPlayer().kickPlayer(MapchaConfig.prefix + " " + MapchaConfig.captchaFailMessage);
+        }, MapchaConfig.captchaTimeLimit * 20);
     }
 
     public BufferedImage render() {
@@ -44,21 +43,21 @@ public class CaptchaPlayer {
         Graphics g = (image = new BufferedImage(130, 130, BufferedImage.TYPE_INT_RGB)).getGraphics();
 
         g.setFont(new Font("Arial", Font.BOLD, 30));
-        g.drawString(Util.NAME, (int) ((image.getWidth() - g.getFontMetrics().getStringBounds(Util.NAME, g).getWidth()) / 2), 30);
+        g.drawString("Mapcha", (int) ((image.getWidth() - g.getFontMetrics().getStringBounds("Mapcha", g).getWidth()) / 2), 30);
 
         g.setFont(new Font("Arial", Font.BOLD, 10));
 
         String sTries = "Tries Left: ";
         g.setColor(Color.WHITE);
         g.drawString(sTries, (int) ((image.getWidth() - g.getFontMetrics().getStringBounds(sTries, g).getWidth()) / 2), 45);
-        g.setColor((Util.CAPTCHA_TRIES - tries) == 1 ? Color.RED : Color.GREEN);
-        g.drawString(String.valueOf((Util.CAPTCHA_TRIES - tries)), (int) (((image.getWidth() - g.getFontMetrics().getStringBounds(sTries, g).getWidth()) / 2) + g.getFontMetrics().getStringBounds(sTries, g).getWidth() + 2), 45);
+        g.setColor((MapchaConfig.captchaTries - tries) == 1 ? Color.RED : Color.GREEN);
+        g.drawString(String.valueOf((MapchaConfig.captchaTries - tries)), (int) (((image.getWidth() - g.getFontMetrics().getStringBounds(sTries, g).getWidth()) / 2) + g.getFontMetrics().getStringBounds(sTries, g).getWidth() + 2), 45);
 
         String sTime = "Time Left: ";
         g.setColor(Color.WHITE);
         g.drawString(sTime, (int) ((image.getWidth() - g.getFontMetrics().getStringBounds(sTime, g).getWidth()) / 2), 55);
-        g.setColor((Util.CAPTCHA_TIME_LIMIT * 1000) - (System.currentTimeMillis() - lastTime) == 1000 ? Color.RED : Color.GREEN);
-        g.drawString(new SimpleDateFormat("ss").format((Util.CAPTCHA_TIME_LIMIT * 1000) - (System.currentTimeMillis() - lastTime)) + " sec", (int) (((image.getWidth() - g.getFontMetrics().getStringBounds(sTime, g).getWidth()) / 2) + g.getFontMetrics().getStringBounds(sTime, g).getWidth() + 2), 55);
+        g.setColor((MapchaConfig.captchaTimeLimit * 1000) - (System.currentTimeMillis() - lastTime) == 1000 ? Color.RED : Color.GREEN);
+        g.drawString(new SimpleDateFormat("ss").format((MapchaConfig.captchaTimeLimit * 1000) - (System.currentTimeMillis() - lastTime)) + " sec", (int) (((image.getWidth() - g.getFontMetrics().getStringBounds(sTime, g).getWidth()) / 2) + g.getFontMetrics().getStringBounds(sTime, g).getWidth() + 2), 55);
 
         g.setFont(new Font("Arial", Font.BOLD, 40));
         g.setColor(Color.WHITE);

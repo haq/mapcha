@@ -5,22 +5,21 @@ import org.bukkit.ChatColor;
 
 public class MapchaConfig {
 
+    public static String prefix;
+
     @ConfigValue("captcha_tries")
-    public static int captchaTries = 3;
+    public static int captchaTries;
 
     @ConfigValue("captcha_time_limit")
-    public static int captchaTimeLimit = 8;
+    public static int captchaTimeLimit;
 
-    @ConfigValue()
-    public static String CAPTCHA_SUCCESS = "Captcha " + ChatColor.GREEN + "solved!";
+    @ConfigValue("captcha_success_message")
+    public static String captchaSuccessMessage;
 
-    @ConfigValue()
-    public static String CAPTCHA_RETRY = "Captcha " + ChatColor.YELLOW + "failed, please try again. ({CURRENT_TRIES}/{MAX_TRIES})";
+    @ConfigValue("captcha_retry_message")
+    public static String captchaRetryMessage;
 
-    @ConfigValue()
-    public static String CAPTCHA_FAIL = "Captcha " + ChatColor.RED + "failed!";
-
-    @ConfigValue("prefix")
-    public static String prefix = ChatColor.WHITE + "[" + ChatColor.GREEN + "Mapcha" + ChatColor.WHITE + "]";
+    @ConfigValue("captcha_fail_message")
+    public static String captchaFailMessage;
 
 }

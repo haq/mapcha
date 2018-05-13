@@ -1,8 +1,8 @@
 package me.ihaq.mapcha.events;
 
 import me.ihaq.mapcha.Mapcha;
+import me.ihaq.mapcha.MapchaConfig;
 import me.ihaq.mapcha.player.CaptchaPlayer;
-import me.ihaq.mapcha.util.Util;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
@@ -30,7 +30,7 @@ public class PlayerEvent implements Listener {
         if (event.getPlayer().hasPermission("mapcha.bypass"))
             return;
 
-        CaptchaPlayer captchaPlayer = new CaptchaPlayer(event.getPlayer(), genCaptcha()).cleanPlayer();
+        CaptchaPlayer captchaPlayer = new CaptchaPlayer(event.getPlayer(), genCaptcha(), mapcha).cleanPlayer();
 
         ItemStack itemStack = new ItemStack(Material.EMPTY_MAP);
         ItemMeta itemMeta = itemStack.getItemMeta();
@@ -39,22 +39,43 @@ public class PlayerEvent implements Listener {
         itemStack.setItemMeta(itemMeta);
 
         captchaPlayer.getPlayer().getInventory().setItemInHand(itemStack);
-        Mapcha.INSTANCE.PLAYER_MANAGER.addPlayer(captchaPlayer);
-
+        mapcha.getPlayerManager().addPlayer(captchaPlayer);
     }
 
     @EventHandler
     public void onLeave(PlayerQuitEvent event) {
 
-        CaptchaPlayer captchaPlayer = Mapcha.INSTANCE.PLAYER_MANAGER.getPlayer(event.getPlayer());
+        CaptchaPlayer captchaPlayer = mapcha.getPlayerManager().getPlayer(event.getPlayer());
 
         if (captchaPlayer == null)
             return;
 
         captchaPlayer.resetInventory();
 
-        Mapcha.INSTANCE.PLAYER_MANAGER.removePlayer(captchaPlayer);
+        mapcha.getPlayerManager().removePlayer(captchaPlayer);
+    }
 
+    @EventHandler
+    public void onPlayerChatEvent(AsyncPlayerChatEvent event) {
+
+        CaptchaPlayer player = mapcha.getPlayerManager().getPlayer(event.getPlayer());
+
+        if (player != null) {
+
+            if (!event.getMessage().equals(player.getCaptcha())) {
+                if (player.getTries() >= (MapchaConfig.captchaTries - 1)) {
+                    Bukkit.getScheduler().runTask(mapcha, () -> player.getPlayer().kickPlayer(MapchaConfig.prefix + " " + MapchaConfig.captchaFailMessage));
+                } else {
+                    player.setTries(player.getTries() + 1);
+                    player.getPlayer().sendMessage(MapchaConfig.prefix + " " + MapchaConfig.captchaRetryMessage.replace("{CURRENT_TRIES}", String.valueOf(player.getTries())).replace("{MAX_TRIES}", String.valueOf(MapchaConfig.captchaTries)));
+                }
+            } else {
+                player.getPlayer().sendMessage(MapchaConfig.prefix + " " + MapchaConfig.captchaSuccessMessage);
+                player.resetInventory();
+                mapcha.getPlayerManager().removePlayer(player);
+            }
+            event.setCancelled(true);
+        }
     }
 
     private String genCaptcha() {
@@ -63,31 +84,6 @@ public class PlayerEvent implements Listener {
         for (int i = 0; i < 4; i++)
             random.append(charset.charAt(new Random().nextInt(charset.length() - 1)));
         return random.toString();
-    }
-
-    @EventHandler
-    public void onPlayerChatEvent(AsyncPlayerChatEvent event) {
-
-        CaptchaPlayer player = Mapcha.INSTANCE.PLAYER_MANAGER.getPlayer(event.getPlayer());
-
-        if (player != null) {
-
-            if (!event.getMessage().equals(player.getCaptcha())) {
-                if (player.getTries() >= (Util.CAPTCHA_TRIES - 1)) {
-                    Bukkit.getScheduler().runTask(Mapcha.INSTANCE, () -> player.getPlayer().kickPlayer(Util.PREFIX + " " + Util.CAPTCHA_FAIL));
-                } else {
-                    player.setTries(player.getTries() + 1);
-                    player.getPlayer().sendMessage(Util.PREFIX + " " + Util.CAPTCHA_RETRY.replace("{TRIES}", String.valueOf(player.getTries())).replace("{MAX_TRIES}", String.valueOf(Util.CAPTCHA_TRIES)));
-                }
-            } else {
-                player.getPlayer().sendMessage(Util.PREFIX + " " + Util.CAPTCHA_SUCCESS);
-                player.resetInventory();
-                Mapcha.INSTANCE.PLAYER_MANAGER.removePlayer(player);
-            }
-            event.setCancelled(true);
-
-        }
-
     }
 
 }
