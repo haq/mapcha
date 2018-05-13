@@ -1,7 +1,7 @@
-package com.envyclient.mapcha.impl.files;
+package me.ihaq.mapcha.impl.files;
 
-import com.envyclient.mapcha.api.file.CustomFile;
-import com.envyclient.mapcha.util.Util;
+import me.ihaq.mapcha.api.file.CustomFile;
+import me.ihaq.mapcha.util.Util;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import net.md_5.bungee.api.ChatColor;

@@ -4,9 +4,9 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.envyclient.mapcha</groupId>
-    <artifactId>Mapcha</artifactId>
-    <version>1.4</version>
+    <groupId>me.ihaq</groupId>
+    <artifactId>mapcha</artifactId>
+    <version>1.5</version>
 
     <build>
         <plugins>
@@ -22,23 +22,29 @@
     </build>
 
     <repositories>
-
         <repository>
             <id>spigot-repo</id>
             <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
         </repository>
-
+        <repository>
+            <id>ihaq-me</id>
+            <name>ihaq-maven</name>
+            <url>http://maven.ihaq.me</url>
+        </repository>
     </repositories>
 
     <dependencies>
-
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>
             <version>1.8.8-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
-
+        <dependency>
+            <groupId>me.ihaq</groupId>
+            <artifactId>config-manager</artifactId>
+            <version>1.1</version>
+        </dependency>
     </dependencies>
 
 

@@ -1,7 +1,7 @@
-package com.envyclient.mapcha.api.player;
+package me.ihaq.mapcha.player;
 
-import com.envyclient.mapcha.Mapcha;
-import com.envyclient.mapcha.util.Util;
+import me.ihaq.mapcha.Mapcha;
+import me.ihaq.mapcha.util.Util;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
@@ -9,7 +9,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.text.SimpleDateFormat;
 
-public class CustomPlayer {
+public class CaptchaPlayer {
 
     private Player player;
     private String captcha;
@@ -18,7 +18,7 @@ public class CustomPlayer {
     private int tries;
     private long lastTime;
 
-    public CustomPlayer(Player player, String captcha) {
+    public CaptchaPlayer(Player player, String captcha) {
         this.player = player;
         this.captcha = captcha;
 
@@ -60,15 +60,12 @@ public class CustomPlayer {
         g.setColor((Util.CAPTCHA_TIME_LIMIT * 1000) - (System.currentTimeMillis() - lastTime) == 1000 ? Color.RED : Color.GREEN);
         g.drawString(new SimpleDateFormat("ss").format((Util.CAPTCHA_TIME_LIMIT * 1000) - (System.currentTimeMillis() - lastTime)) + " sec", (int) (((image.getWidth() - g.getFontMetrics().getStringBounds(sTime, g).getWidth()) / 2) + g.getFontMetrics().getStringBounds(sTime, g).getWidth() + 2), 55);
 
-
         g.setFont(new Font("Arial", Font.BOLD, 40));
         g.setColor(Color.WHITE);
         g.drawString(captcha, (int) ((image.getWidth() - g.getFontMetrics().getStringBounds(captcha, g).getWidth()) / 2), 105);
 
         return image;
-
     }
-
 
     public void resetInventory() {
         getPlayer().getInventory().setContents(contents);
@@ -76,7 +73,7 @@ public class CustomPlayer {
         getPlayer().updateInventory();
     }
 
-    public CustomPlayer cleanPlayer() {
+    public CaptchaPlayer cleanPlayer() {
         player.getInventory().clear();
         player.getInventory().setArmorContents(null);
         getPlayer().updateInventory();
@@ -99,6 +96,5 @@ public class CustomPlayer {
     public void setTries(int tries) {
         this.tries = tries;
     }
-
 
 }
