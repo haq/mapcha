@@ -1,10 +1,9 @@
-package com.envyclient.mapcha.impl.events;
+package me.ihaq.mapcha.events;
 
-import com.envyclient.mapcha.Mapcha;
-import com.envyclient.mapcha.api.player.CustomPlayer;
+import me.ihaq.mapcha.Mapcha;
+import me.ihaq.mapcha.player.CaptchaPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.server.MapInitializeEvent;
 import org.bukkit.map.MapCanvas;
@@ -15,6 +14,12 @@ import java.util.List;
 
 public class MapEvent implements Listener {
 
+    private Mapcha mapcha;
+
+    public MapEvent(Mapcha mapcha) {
+        this.mapcha = mapcha;
+    }
+
     @EventHandler
     public void onMapInitilize(MapInitializeEvent event) {
 
@@ -24,11 +29,11 @@ public class MapEvent implements Listener {
 
         map.setScale(MapView.Scale.NORMAL);
         map.getRenderers().forEach(map::removeRenderer);
-        
+
         map.addRenderer(new MapRenderer() {
             @Override
             public void render(MapView mapView, MapCanvas mapCanvas, Player player) {
-                CustomPlayer p = Mapcha.INSTANCE.PLAYER_MANAGER.getPlayer(player);
+                CaptchaPlayer p = mapcha.getPlayerManager().getPlayer(player);
                 if (p == null) {
                     old.forEach(map::addRenderer);
                 } else {
