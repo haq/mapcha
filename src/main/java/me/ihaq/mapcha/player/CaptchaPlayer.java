@@ -37,10 +37,8 @@ public class CaptchaPlayer {
 
     public BufferedImage render() {
 
-
-        BufferedImage image;
-
-        Graphics g = (image = new BufferedImage(130, 130, BufferedImage.TYPE_INT_RGB)).getGraphics();
+        BufferedImage image = new BufferedImage(130, 130, BufferedImage.TYPE_INT_RGB);
+        Graphics g = image.getGraphics();
 
         g.setFont(new Font("Arial", Font.BOLD, 30));
         g.drawString("Mapcha", (int) ((image.getWidth() - g.getFontMetrics().getStringBounds("Mapcha", g).getWidth()) / 2), 30);

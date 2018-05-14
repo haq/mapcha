@@ -51,7 +51,6 @@ public class PlayerEvent implements Listener {
             return;
 
         captchaPlayer.resetInventory();
-
         mapcha.getPlayerManager().removePlayer(captchaPlayer);
     }
 

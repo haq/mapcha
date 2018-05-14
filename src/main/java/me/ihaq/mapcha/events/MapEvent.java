@@ -24,7 +24,6 @@ public class MapEvent implements Listener {
     public void onMapInitilize(MapInitializeEvent event) {
 
         MapView map = event.getMap();
-
         List<MapRenderer> old = map.getRenderers();
 
         map.setScale(MapView.Scale.NORMAL);

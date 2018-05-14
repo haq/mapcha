@@ -5,7 +5,7 @@ import org.bukkit.ChatColor;
 
 public class MapchaConfig {
 
-    public static String prefix;
+    public static String prefix = "[" + ChatColor.GREEN + "Mapcha" + ChatColor.RESET + "]";
 
     @ConfigValue("captcha_tries")
     public static int captchaTries;
