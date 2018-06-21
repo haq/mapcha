@@ -18,5 +18,5 @@ captcha_success_message: "Captcha &asolved!"
 captcha_retry_message: "Captcha &efailed, &rplease try again. ({CURRENT_TRIES}/{MAX_TRIES})"
 
 # The fail message the user receive after they fail the captcha.
-captcha_fail_message: "Captcha &cfailed!" # kick message
+captcha_fail_message: "Captcha &cfailed!"
 ```
