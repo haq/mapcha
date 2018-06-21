@@ -8,8 +8,8 @@ This repository contains the src of the plugin that goes by the name of [Mapcha]
 # The amount of tries the player will get to solve the captcha.
 captcha_tries: 3
 
-# The time limit the player has to solve the captcha.
-captcha_time_limit: 10 # seconds
+# The time limit in seconds the player has to solve the captcha.
+captcha_time_limit: 10
 
 # The success message the player receive after they solve the captcha.
 captcha_success_message: "Captcha &asolved!"
