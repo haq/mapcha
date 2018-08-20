@@ -1,9 +1,9 @@
 [![license](https://img.shields.io/github/license/mashape/apistatus.svg) ](LICENSE)
 
 # Mapcha
-This repository contains the src of the plugin that goes by the name of [Mapcha](https://www.spigotmc.org/resources/mapcha.51630/). A simple captcha plugin, which uses maps as the captcha.
+A simple captcha plugin, which uses maps as the captcha. The spigot thread can be found [here](https://www.spigotmc.org/resources/mapcha.51630/).
 
-### Default config
+### Config
 ```yml
 # The amount of tries the player will get to solve the captcha.
 captcha_tries: 3
@@ -15,7 +15,7 @@ captcha_time_limit: 10
 captcha_success_message: "Captcha &asolved!"
 
 # The retry message the player receive after they fail one of their tries.
-captcha_retry_message: "Captcha &efailed, &rplease try again. ({CURRENT_TRIES}/{MAX_TRIES})"
+captcha_retry_message: "Captcha &efailed, &rplease try again. ({CURRENT}/{MAX})"
 
 # The fail message the user receive after they fail the captcha.
 captcha_fail_message: "Captcha &cfailed!"

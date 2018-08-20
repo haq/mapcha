@@ -1,13 +1,14 @@
 package me.ihaq.mapcha.player;
 
 import me.ihaq.mapcha.Mapcha;
-import me.ihaq.mapcha.MapchaConfig;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.text.SimpleDateFormat;
+
+import static me.ihaq.mapcha.Mapcha.Config.*;
 
 public class CaptchaPlayer {
 
@@ -31,8 +32,8 @@ public class CaptchaPlayer {
 
         player.getServer().getScheduler().scheduleSyncDelayedTask(mapcha, () -> {
             if (mapcha.getPlayerManager().getPlayer(player) != null)
-                player.getPlayer().kickPlayer(MapchaConfig.prefix + " " + MapchaConfig.captchaFailMessage);
-        }, MapchaConfig.captchaTimeLimit * 20);
+                player.getPlayer().kickPlayer(prefix + " " + captchaFailMessage);
+        }, captchaTimeLimit * 20);
     }
 
     public BufferedImage render() {
@@ -48,14 +49,14 @@ public class CaptchaPlayer {
         String sTries = "Tries Left: ";
         g.setColor(Color.WHITE);
         g.drawString(sTries, (int) ((image.getWidth() - g.getFontMetrics().getStringBounds(sTries, g).getWidth()) / 2), 45);
-        g.setColor((MapchaConfig.captchaTries - tries) == 1 ? Color.RED : Color.GREEN);
-        g.drawString(String.valueOf((MapchaConfig.captchaTries - tries)), (int) (((image.getWidth() - g.getFontMetrics().getStringBounds(sTries, g).getWidth()) / 2) + g.getFontMetrics().getStringBounds(sTries, g).getWidth() + 2), 45);
+        g.setColor((captchaTries - tries) == 1 ? Color.RED : Color.GREEN);
+        g.drawString(String.valueOf((captchaTries - tries)), (int) (((image.getWidth() - g.getFontMetrics().getStringBounds(sTries, g).getWidth()) / 2) + g.getFontMetrics().getStringBounds(sTries, g).getWidth() + 2), 45);
 
         String sTime = "Time Left: ";
         g.setColor(Color.WHITE);
         g.drawString(sTime, (int) ((image.getWidth() - g.getFontMetrics().getStringBounds(sTime, g).getWidth()) / 2), 55);
-        g.setColor((MapchaConfig.captchaTimeLimit * 1000) - (System.currentTimeMillis() - lastTime) == 1000 ? Color.RED : Color.GREEN);
-        g.drawString(new SimpleDateFormat("ss").format((MapchaConfig.captchaTimeLimit * 1000) - (System.currentTimeMillis() - lastTime)) + " sec", (int) (((image.getWidth() - g.getFontMetrics().getStringBounds(sTime, g).getWidth()) / 2) + g.getFontMetrics().getStringBounds(sTime, g).getWidth() + 2), 55);
+        g.setColor((captchaTimeLimit * 1000) - (System.currentTimeMillis() - lastTime) == 1000 ? Color.RED : Color.GREEN);
+        g.drawString(new SimpleDateFormat("ss").format((captchaTimeLimit * 1000) - (System.currentTimeMillis() - lastTime)) + " sec", (int) (((image.getWidth() - g.getFontMetrics().getStringBounds(sTime, g).getWidth()) / 2) + g.getFontMetrics().getStringBounds(sTime, g).getWidth() + 2), 55);
 
         g.setFont(new Font("Arial", Font.BOLD, 40));
         g.setColor(Color.WHITE);

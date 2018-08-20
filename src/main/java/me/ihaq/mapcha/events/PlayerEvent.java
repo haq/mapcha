@@ -1,7 +1,6 @@
 package me.ihaq.mapcha.events;
 
 import me.ihaq.mapcha.Mapcha;
-import me.ihaq.mapcha.MapchaConfig;
 import me.ihaq.mapcha.player.CaptchaPlayer;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -16,6 +15,8 @@ import org.bukkit.inventory.meta.ItemMeta;
 import java.util.Collections;
 import java.util.Random;
 
+import static me.ihaq.mapcha.Mapcha.Config.*;
+
 public class PlayerEvent implements Listener {
 
     private Mapcha mapcha;
@@ -27,10 +28,12 @@ public class PlayerEvent implements Listener {
     @EventHandler
     public void onJoin(PlayerJoinEvent event) {
 
-        if (event.getPlayer().hasPermission("mapcha.bypass"))
+        if (event.getPlayer().hasPermission(permission)) {
             return;
+        }
 
-        CaptchaPlayer captchaPlayer = new CaptchaPlayer(event.getPlayer(), genCaptcha(), mapcha).cleanPlayer();
+        CaptchaPlayer captchaPlayer = new CaptchaPlayer(event.getPlayer(), genCaptcha(), mapcha)
+                .cleanPlayer();
 
         ItemStack itemStack = new ItemStack(Material.EMPTY_MAP);
         ItemMeta itemMeta = itemStack.getItemMeta();
@@ -47,8 +50,9 @@ public class PlayerEvent implements Listener {
 
         CaptchaPlayer captchaPlayer = mapcha.getPlayerManager().getPlayer(event.getPlayer());
 
-        if (captchaPlayer == null)
+        if (captchaPlayer == null) {
             return;
+        }
 
         captchaPlayer.resetInventory();
         mapcha.getPlayerManager().removePlayer(captchaPlayer);
@@ -62,17 +66,18 @@ public class PlayerEvent implements Listener {
         if (player != null) {
 
             if (!event.getMessage().equals(player.getCaptcha())) {
-                if (player.getTries() >= (MapchaConfig.captchaTries - 1)) {
-                    Bukkit.getScheduler().runTask(mapcha, () -> player.getPlayer().kickPlayer(MapchaConfig.prefix + " " + MapchaConfig.captchaFailMessage));
+                if (player.getTries() >= (captchaTries - 1)) {
+                    Bukkit.getScheduler().runTask(mapcha, () -> player.getPlayer().kickPlayer(prefix + " " + captchaFailMessage));
                 } else {
                     player.setTries(player.getTries() + 1);
-                    player.getPlayer().sendMessage(MapchaConfig.prefix + " " + MapchaConfig.captchaRetryMessage.replace("{CURRENT_TRIES}", String.valueOf(player.getTries())).replace("{MAX_TRIES}", String.valueOf(MapchaConfig.captchaTries)));
+                    player.getPlayer().sendMessage(prefix + " " + captchaRetryMessage.replace("{CURRENT}", String.valueOf(player.getTries())).replace("{MAX}", String.valueOf(captchaTries)));
                 }
             } else {
-                player.getPlayer().sendMessage(MapchaConfig.prefix + " " + MapchaConfig.captchaSuccessMessage);
+                player.getPlayer().sendMessage(prefix + " " + captchaSuccessMessage);
                 player.resetInventory();
                 mapcha.getPlayerManager().removePlayer(player);
             }
+
             event.setCancelled(true);
         }
     }
@@ -80,8 +85,9 @@ public class PlayerEvent implements Listener {
     private String genCaptcha() {
         String charset = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
         StringBuilder random = new StringBuilder();
-        for (int i = 0; i < 4; i++)
+        for (int i = 0; i < 4; i++) {
             random.append(charset.charAt(new Random().nextInt(charset.length() - 1)));
+        }
         return random.toString();
     }
 

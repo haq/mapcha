@@ -6,17 +6,20 @@ import me.ihaq.mapcha.events.MapEvent;
 import me.ihaq.mapcha.events.PlayerEvent;
 import me.ihaq.mapcha.player.CaptchaPlayerManager;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import static org.bukkit.ChatColor.*;
+
 public class Mapcha extends JavaPlugin {
 
-    private final CaptchaPlayerManager playerManager = new CaptchaPlayerManager();
+    private CaptchaPlayerManager playerManager = new CaptchaPlayerManager();
 
     @Override
     public void onEnable() {
-        new ConfigManager(this).register(MapchaConfig.class).load();
+        new ConfigManager(this)
+                .register(new Config())
+                .load();
 
         // registering events
         PluginManager pluginManager = Bukkit.getPluginManager();
@@ -26,6 +29,27 @@ public class Mapcha extends JavaPlugin {
 
     public CaptchaPlayerManager getPlayerManager() {
         return playerManager;
+    }
+
+    public static class Config {
+
+        public static String prefix = "[" + GREEN + "Mapcha" + RESET + "]";
+        public static String permission = "mapcha.bypass";
+
+        @ConfigValue("captcha_tries")
+        public static int captchaTries = 3;
+
+        @ConfigValue("captcha_time_limit")
+        public static int captchaTimeLimit = 10;
+
+        @ConfigValue("captcha_success_message")
+        public static String captchaSuccessMessage = "Captcha " + GREEN + "solved!";
+
+        @ConfigValue("captcha_retry_message")
+        public static String captchaRetryMessage = "Captcha " + YELLOW + "failed, " + RESET + "please try again. ({CURRENT}/{MAX})";
+
+        @ConfigValue("captcha_fail_message")
+        public static String captchaFailMessage = "Captcha " + RED + "failed!";
     }
 
 }

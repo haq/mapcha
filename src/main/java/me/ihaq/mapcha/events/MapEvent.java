@@ -41,6 +41,5 @@ public class MapEvent implements Listener {
             }
 
         });
-
     }
 }

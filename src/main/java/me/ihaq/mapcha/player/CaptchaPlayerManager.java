@@ -1,6 +1,7 @@
 package me.ihaq.mapcha.player;
 
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +18,7 @@ public class CaptchaPlayerManager {
         playerList.remove(player);
     }
 
+    @Nullable
     public CaptchaPlayer getPlayer(Player player) {
         return playerList.stream()
                 .filter(p -> p.getPlayer().getUniqueId() == player.getPlayer().getUniqueId())
