@@ -67,14 +67,15 @@ public class PlayerEvent implements Listener {
 
         if (player != null) {
 
+            // captcha was not right
             if (!event.getMessage().equals(player.getCaptcha())) {
-                if (player.getTries() >= (captchaTries - 1)) {
+                if (player.getTries() >= (captchaTries - 1)) { // kicking the player because he's out of tries
                     Bukkit.getScheduler().runTask(mapcha, () -> player.getPlayer().kickPlayer(prefix + " " + captchaFailMessage));
-                } else {
+                } else { // telling the player to try again
                     player.setTries(player.getTries() + 1);
                     player.getPlayer().sendMessage(prefix + " " + captchaRetryMessage.replace("{CURRENT}", String.valueOf(player.getTries())).replace("{MAX}", String.valueOf(captchaTries)));
                 }
-            } else {
+            } else { // the user got the captcha right
                 player.getPlayer().sendMessage(prefix + " " + captchaSuccessMessage);
                 player.resetInventory();
                 mapcha.getPlayerManager().removePlayer(player);
@@ -86,7 +87,7 @@ public class PlayerEvent implements Listener {
 
     @EventHandler(priority = EventPriority.HIGH)
     public void onCommand(PlayerCommandPreprocessEvent event) {
-        event.setCancelled(mapcha.getPlayerManager().getPlayer(event.getPlayer()) != null);
+        event.setCancelled(mapcha.getPlayerManager().getPlayer(event.getPlayer()) != null && !commands.contains(event.getMessage()));
     }
 
     private String genCaptcha() {

@@ -9,6 +9,9 @@ import org.bukkit.Bukkit;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.Arrays;
+import java.util.List;
+
 import static org.bukkit.ChatColor.*;
 
 public class Mapcha extends JavaPlugin {
@@ -33,8 +36,13 @@ public class Mapcha extends JavaPlugin {
 
     public static class Config {
 
+        @ConfigValue("prefix")
         public static String prefix = "[" + GREEN + "Mapcha" + RESET + "]";
+
         public static String permission = "mapcha.bypass";
+
+        @ConfigValue("commands")
+        public static List<String> commands = Arrays.asList("/register", "/login");
 
         @ConfigValue("tries")
         public static int captchaTries = 3;
