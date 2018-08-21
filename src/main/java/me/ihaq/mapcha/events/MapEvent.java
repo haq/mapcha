@@ -4,6 +4,7 @@ import me.ihaq.mapcha.Mapcha;
 import me.ihaq.mapcha.player.CaptchaPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.server.MapInitializeEvent;
 import org.bukkit.map.MapCanvas;
@@ -20,7 +21,7 @@ public class MapEvent implements Listener {
         this.mapcha = mapcha;
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.HIGH)
     public void onMapInitilize(MapInitializeEvent event) {
 
         MapView map = event.getMap();

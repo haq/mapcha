@@ -5,8 +5,10 @@ import me.ihaq.mapcha.player.CaptchaPlayer;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
+import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.ItemStack;
@@ -25,7 +27,7 @@ public class PlayerEvent implements Listener {
         this.mapcha = mapcha;
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.HIGH)
     public void onJoin(PlayerJoinEvent event) {
 
         if (event.getPlayer().hasPermission(permission)) {
@@ -45,7 +47,7 @@ public class PlayerEvent implements Listener {
         mapcha.getPlayerManager().addPlayer(captchaPlayer);
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.HIGH)
     public void onLeave(PlayerQuitEvent event) {
 
         CaptchaPlayer captchaPlayer = mapcha.getPlayerManager().getPlayer(event.getPlayer());
@@ -58,7 +60,7 @@ public class PlayerEvent implements Listener {
         mapcha.getPlayerManager().removePlayer(captchaPlayer);
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.HIGH)
     public void onPlayerChatEvent(AsyncPlayerChatEvent event) {
 
         CaptchaPlayer player = mapcha.getPlayerManager().getPlayer(event.getPlayer());
@@ -80,6 +82,11 @@ public class PlayerEvent implements Listener {
 
             event.setCancelled(true);
         }
+    }
+
+    @EventHandler(priority = EventPriority.HIGH)
+    public void onCommand(PlayerCommandPreprocessEvent event) {
+        event.setCancelled(mapcha.getPlayerManager().getPlayer(event.getPlayer()) != null);
     }
 
     private String genCaptcha() {
