@@ -31,8 +31,9 @@ public class CaptchaPlayer {
         tries = 0;
 
         player.getServer().getScheduler().scheduleSyncDelayedTask(mapcha, () -> {
-            if (mapcha.getPlayerManager().getPlayer(player) != null)
+            if (mapcha.getPlayerManager().getPlayer(player) != null) {
                 player.getPlayer().kickPlayer(prefix + " " + captchaFailMessage);
+            }
         }, captchaTimeLimit * 20);
     }
 

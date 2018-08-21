@@ -36,19 +36,19 @@ public class Mapcha extends JavaPlugin {
         public static String prefix = "[" + GREEN + "Mapcha" + RESET + "]";
         public static String permission = "mapcha.bypass";
 
-        @ConfigValue("captcha_tries")
+        @ConfigValue("tries")
         public static int captchaTries = 3;
 
-        @ConfigValue("captcha_time_limit")
+        @ConfigValue("time_limit")
         public static int captchaTimeLimit = 10;
 
-        @ConfigValue("captcha_success_message")
+        @ConfigValue("messages.success")
         public static String captchaSuccessMessage = "Captcha " + GREEN + "solved!";
 
-        @ConfigValue("captcha_retry_message")
+        @ConfigValue("messages.retry")
         public static String captchaRetryMessage = "Captcha " + YELLOW + "failed, " + RESET + "please try again. ({CURRENT}/{MAX})";
 
-        @ConfigValue("captcha_fail_message")
+        @ConfigValue("messages.fail")
         public static String captchaFailMessage = "Captcha " + RED + "failed!";
     }
 

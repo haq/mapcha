@@ -39,7 +39,6 @@ public class MapEvent implements Listener {
                     mapCanvas.drawImage(0, 0, p.render());
                 }
             }
-
         });
     }
 }
