@@ -87,7 +87,16 @@ public class PlayerEvent implements Listener {
 
     @EventHandler(priority = EventPriority.HIGH)
     public void onCommand(PlayerCommandPreprocessEvent event) {
-        event.setCancelled(mapcha.getPlayerManager().getPlayer(event.getPlayer()) != null && !commands.contains(event.getMessage()));
+        event.setCancelled(mapcha.getPlayerManager().getPlayer(event.getPlayer()) != null && !validCommand(event.getMessage()));
+    }
+
+    private boolean validCommand(String message) {
+        for (String command : commands) {
+            if (message.contains(command)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private String genCaptcha() {
