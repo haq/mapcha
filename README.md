@@ -4,7 +4,7 @@
 A simple captcha plugin, which uses maps as the captcha. The spigot thread can be found [here](https://www.spigotmc.org/resources/mapcha.51630/).
 
 ### Default config
-```yml
+```yaml
 # The amount of tries the player will get to solve the captcha.
 tries: 3
 
