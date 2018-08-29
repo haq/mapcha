@@ -1,7 +1,7 @@
 [![license](https://img.shields.io/github/license/mashape/apistatus.svg) ](LICENSE)
 
 # Mapcha
-A simple captcha plugin, which uses maps as the captcha. The spigot thread can be found [here](https://www.spigotmc.org/resources/mapcha.51630/).
+A simple captcha plugin, which uses maps as the captcha.
 
 ### Default config
 ```yaml
