@@ -11,6 +11,10 @@ tries: 3
 # The time limit in seconds the player has to solve the captcha.
 time_limit: 10
 
+# The server name to connect to when the user completes a captcha
+# Leave empty if you don't want it to do anything
+success_server:
+
 messages:
   # The success message the player receive after they solve the captcha.
   success: Captcha &asolved!

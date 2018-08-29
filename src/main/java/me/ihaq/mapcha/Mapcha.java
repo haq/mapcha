@@ -1,7 +1,7 @@
 package me.ihaq.mapcha;
 
-import me.ihaq.configmanager.ConfigManager;
-import me.ihaq.configmanager.data.ConfigValue;
+import me.ihaq.keeper.Keeper;
+import me.ihaq.keeper.data.ConfigValue;
 import me.ihaq.mapcha.events.MapEvent;
 import me.ihaq.mapcha.events.PlayerEvent;
 import me.ihaq.mapcha.player.CaptchaPlayerManager;
@@ -20,7 +20,7 @@ public class Mapcha extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        new ConfigManager(this)
+        new Keeper(this)
                 .register(new Config())
                 .load();
 
@@ -28,6 +28,8 @@ public class Mapcha extends JavaPlugin {
         PluginManager pluginManager = Bukkit.getPluginManager();
         pluginManager.registerEvents(new PlayerEvent(this), this);
         pluginManager.registerEvents(new MapEvent(this), this);
+
+        getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
     }
 
     public CaptchaPlayerManager getPlayerManager() {
@@ -49,6 +51,9 @@ public class Mapcha extends JavaPlugin {
 
         @ConfigValue("time_limit")
         public static int captchaTimeLimit = 10;
+
+        @ConfigValue("success_server")
+        public static String successServer = "";
 
         @ConfigValue("messages.success")
         public static String captchaSuccessMessage = "Captcha " + GREEN + "solved!";

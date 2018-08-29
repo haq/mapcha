@@ -1,5 +1,5 @@
 name: Mapcha
-version: 1.7
+version: 1.8
 main: me.ihaq.mapcha.Mapcha
 description: A simple captcha plugin, which uses maps as the captcha.
 

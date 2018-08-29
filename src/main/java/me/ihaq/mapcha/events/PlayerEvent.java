@@ -1,5 +1,7 @@
 package me.ihaq.mapcha.events;
 
+import com.google.common.io.ByteArrayDataOutput;
+import com.google.common.io.ByteStreams;
 import me.ihaq.mapcha.Mapcha;
 import me.ihaq.mapcha.player.CaptchaPlayer;
 import org.bukkit.Bukkit;
@@ -34,8 +36,10 @@ public class PlayerEvent implements Listener {
             return;
         }
 
-        CaptchaPlayer captchaPlayer = new CaptchaPlayer(event.getPlayer(), genCaptcha(), mapcha)
-                .cleanPlayer();
+        CaptchaPlayer captchaPlayer = new CaptchaPlayer
+                (
+                        event.getPlayer(), genCaptcha(), mapcha
+                ).cleanPlayer();
 
         ItemStack itemStack = new ItemStack(Material.EMPTY_MAP);
         ItemMeta itemMeta = itemStack.getItemMeta();
@@ -75,10 +79,18 @@ public class PlayerEvent implements Listener {
                     player.setTries(player.getTries() + 1);
                     player.getPlayer().sendMessage(prefix + " " + captchaRetryMessage.replace("{CURRENT}", String.valueOf(player.getTries())).replace("{MAX}", String.valueOf(captchaTries)));
                 }
-            } else { // the user got the captcha right
+            } else { // captcha success
                 player.getPlayer().sendMessage(prefix + " " + captchaSuccessMessage);
                 player.resetInventory();
                 mapcha.getPlayerManager().removePlayer(player);
+
+                // if set in config we send the player to the specified server
+                if (successServer != null && !successServer.isEmpty()) {
+                    ByteArrayDataOutput out = ByteStreams.newDataOutput();
+                    out.writeUTF("Connect");
+                    out.writeUTF(successServer);
+                    player.getPlayer().sendPluginMessage(mapcha, "BungeeCord", out.toByteArray());
+                }
             }
 
             event.setCancelled(true);
