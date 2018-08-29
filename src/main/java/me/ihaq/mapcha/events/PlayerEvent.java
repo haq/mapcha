@@ -6,6 +6,7 @@ import me.ihaq.mapcha.Mapcha;
 import me.ihaq.mapcha.player.CaptchaPlayer;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -32,13 +33,16 @@ public class PlayerEvent implements Listener {
     @EventHandler(priority = EventPriority.HIGH)
     public void onJoin(PlayerJoinEvent event) {
 
-        if (event.getPlayer().hasPermission(permission)) {
+        Player player = event.getPlayer();
+
+        if (player.hasPermission(permission)) {
+            Bukkit.getScheduler().scheduleSyncDelayedTask(mapcha, () -> sendPlayerToServer(player), 15);
             return;
         }
 
         CaptchaPlayer captchaPlayer = new CaptchaPlayer
                 (
-                        event.getPlayer(), genCaptcha(), mapcha
+                        player, genCaptcha(), mapcha
                 ).cleanPlayer();
 
         ItemStack itemStack = new ItemStack(Material.EMPTY_MAP);
@@ -83,14 +87,7 @@ public class PlayerEvent implements Listener {
                 player.getPlayer().sendMessage(prefix + " " + captchaSuccessMessage);
                 player.resetInventory();
                 mapcha.getPlayerManager().removePlayer(player);
-
-                // if set in config we send the player to the specified server
-                if (successServer != null && !successServer.isEmpty()) {
-                    ByteArrayDataOutput out = ByteStreams.newDataOutput();
-                    out.writeUTF("Connect");
-                    out.writeUTF(successServer);
-                    player.getPlayer().sendPluginMessage(mapcha, "BungeeCord", out.toByteArray());
-                }
+                sendPlayerToServer(player.getPlayer());
             }
 
             event.setCancelled(true);
@@ -118,6 +115,15 @@ public class PlayerEvent implements Listener {
             random.append(charset.charAt(new Random().nextInt(charset.length() - 1)));
         }
         return random.toString();
+    }
+
+    private void sendPlayerToServer(Player player) {
+        if (successServer != null && !successServer.isEmpty()) {
+            ByteArrayDataOutput out = ByteStreams.newDataOutput();
+            out.writeUTF("Connect");
+            out.writeUTF(successServer);
+            player.sendPluginMessage(mapcha, "BungeeCord", out.toByteArray());
+        }
     }
 
 }
