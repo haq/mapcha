@@ -1,4 +1,4 @@
-package me.ihaq.mapcha.player;
+package me.affanhaq.mapcha.player;
 
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.Nullable;
@@ -8,7 +8,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 public class CaptchaPlayerManager {
 
-    private List<CaptchaPlayer> playerList = new CopyOnWriteArrayList<>();
+    private final List<CaptchaPlayer> playerList = new CopyOnWriteArrayList<>();
 
     public void addPlayer(CaptchaPlayer player) {
         playerList.add(player);

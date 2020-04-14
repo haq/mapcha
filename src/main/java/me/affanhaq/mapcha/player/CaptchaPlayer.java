@@ -1,6 +1,6 @@
-package me.ihaq.mapcha.player;
+package me.affanhaq.mapcha.player;
 
-import me.ihaq.mapcha.Mapcha;
+import me.affanhaq.mapcha.Mapcha;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
@@ -8,28 +8,35 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.text.SimpleDateFormat;
 
-import static me.ihaq.mapcha.Mapcha.Config.*;
+import static me.affanhaq.mapcha.Mapcha.Config.*;
 
 public class CaptchaPlayer {
 
-    private Player player;
-    private String captcha;
+    private final Player player;
+    private final String captcha;
 
-    private ItemStack[] contents;
-    private ItemStack[] armour;
+    private final ItemStack[] contents;
+    private final ItemStack[] armour;
     private int tries;
-    private long lastTime;
+    private final long lastTime;
 
+    /**
+     * @param player  the player
+     * @param captcha the captcha string for the player
+     * @param mapcha  JavaPlugin
+     */
     public CaptchaPlayer(Player player, String captcha, Mapcha mapcha) {
         this.player = player;
         this.captcha = captcha;
 
+        // getting the players
         contents = player.getInventory().getContents();
         armour = player.getInventory().getArmorContents();
 
         lastTime = System.currentTimeMillis();
         tries = 0;
 
+        // starting a timer to kick the player if the captcha has not been finished
         player.getServer().getScheduler().scheduleSyncDelayedTask(mapcha, () -> {
             if (mapcha.getPlayerManager().getPlayer(player) != null) {
                 player.getPlayer().kickPlayer(prefix + " " + captchaFailMessage);
@@ -37,6 +44,11 @@ public class CaptchaPlayer {
         }, captchaTimeLimit * 20);
     }
 
+    /**
+     * Renders the captcha.
+     *
+     * @return the rendered captcha
+     */
     public BufferedImage render() {
 
         BufferedImage image = new BufferedImage(130, 130, BufferedImage.TYPE_INT_RGB);
@@ -66,6 +78,9 @@ public class CaptchaPlayer {
         return image;
     }
 
+    /**
+     * Gives the players items back.
+     */
     public void resetInventory() {
         getPlayer().getInventory().setContents(contents);
         getPlayer().getInventory().setArmorContents(armour);

@@ -1,10 +1,10 @@
-package me.ihaq.mapcha;
+package me.affanhaq.mapcha;
 
+import me.affanhaq.mapcha.events.MapEvent;
+import me.affanhaq.mapcha.events.PlayerEvent;
+import me.affanhaq.mapcha.player.CaptchaPlayerManager;
 import me.ihaq.keeper.Keeper;
 import me.ihaq.keeper.data.ConfigValue;
-import me.ihaq.mapcha.events.MapEvent;
-import me.ihaq.mapcha.events.PlayerEvent;
-import me.ihaq.mapcha.player.CaptchaPlayerManager;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -16,7 +16,7 @@ import static org.bukkit.ChatColor.*;
 
 public class Mapcha extends JavaPlugin {
 
-    private CaptchaPlayerManager playerManager = new CaptchaPlayerManager();
+    private final CaptchaPlayerManager playerManager = new CaptchaPlayerManager();
 
     @Override
     public void onEnable() {
@@ -38,10 +38,10 @@ public class Mapcha extends JavaPlugin {
 
     public static class Config {
 
+        public static String permission = "mapcha.bypass";
+
         @ConfigValue("prefix")
         public static String prefix = "[" + GREEN + "Mapcha" + RESET + "]";
-
-        public static String permission = "mapcha.bypass";
 
         @ConfigValue("commands")
         public static List<String> commands = Arrays.asList("/register", "/login");

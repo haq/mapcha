@@ -27,8 +27,8 @@
             <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
         </repository>
         <repository>
-            <id>ihaq-me</id>
-            <url>http://maven.ihaq.me/libs-maven/</url>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
         </repository>
     </repositories>
 
@@ -36,13 +36,13 @@
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>
-            <version>1.8.8-R0.1-SNAPSHOT</version>
+            <version>1.15.2-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>me.ihaq.keeper</groupId>
+            <groupId>com.github.haq.keeper</groupId>
             <artifactId>spigot</artifactId>
-            <version>1.0</version>
+            <version>master</version>
         </dependency>
         <dependency>
             <groupId>org.jetbrains</groupId>

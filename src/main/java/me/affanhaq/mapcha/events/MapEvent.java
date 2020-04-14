@@ -1,7 +1,7 @@
-package me.ihaq.mapcha.events;
+package me.affanhaq.mapcha.events;
 
-import me.ihaq.mapcha.Mapcha;
-import me.ihaq.mapcha.player.CaptchaPlayer;
+import me.affanhaq.mapcha.player.CaptchaPlayer;
+import me.affanhaq.mapcha.Mapcha;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;

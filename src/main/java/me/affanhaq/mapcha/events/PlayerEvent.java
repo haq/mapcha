@@ -1,9 +1,9 @@
-package me.ihaq.mapcha.events;
+package me.affanhaq.mapcha.events;
 
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
-import me.ihaq.mapcha.Mapcha;
-import me.ihaq.mapcha.player.CaptchaPlayer;
+import me.affanhaq.mapcha.Mapcha;
+import me.affanhaq.mapcha.player.CaptchaPlayer;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -20,11 +20,11 @@ import org.bukkit.inventory.meta.ItemMeta;
 import java.util.Collections;
 import java.util.Random;
 
-import static me.ihaq.mapcha.Mapcha.Config.*;
+import static me.affanhaq.mapcha.Mapcha.Config.*;
 
 public class PlayerEvent implements Listener {
 
-    private Mapcha mapcha;
+    private final Mapcha mapcha;
 
     public PlayerEvent(Mapcha mapcha) {
         this.mapcha = mapcha;
@@ -35,22 +35,29 @@ public class PlayerEvent implements Listener {
 
         Player player = event.getPlayer();
 
+        // player has permission to bypass the captcha
         if (player.hasPermission(permission)) {
             Bukkit.getScheduler().scheduleSyncDelayedTask(mapcha, () -> sendPlayerToServer(player), 15);
             return;
         }
 
-        CaptchaPlayer captchaPlayer = new CaptchaPlayer
-                (
-                        player, genCaptcha(), mapcha
-                ).cleanPlayer();
+        // creating a captcha player
+        CaptchaPlayer captchaPlayer = new CaptchaPlayer(player, genCaptcha(), mapcha).cleanPlayer();
 
-        ItemStack itemStack = new ItemStack(Material.EMPTY_MAP);
+        // making a map for the player
+        String version = Bukkit.getVersion();
+        ItemStack itemStack;
+        if (version.contains("1.13") || version.contains("1.14") || version.contains("1.15") || version.contains("1.16")) {
+            itemStack = new ItemStack(Material.valueOf("LEGACY_EMPTY_MAP"));
+        } else {
+            itemStack = new ItemStack(Material.valueOf("EMPTY_MAP"));
+        }
         ItemMeta itemMeta = itemStack.getItemMeta();
         itemMeta.setDisplayName("Mapcha");
         itemMeta.setLore(Collections.singletonList("Open the map to see the captcha."));
         itemStack.setItemMeta(itemMeta);
 
+        // giving the player the map and adding them to the captcha array
         captchaPlayer.getPlayer().getInventory().setItemInHand(itemStack);
         mapcha.getPlayerManager().addPlayer(captchaPlayer);
     }
@@ -64,41 +71,48 @@ public class PlayerEvent implements Listener {
             return;
         }
 
+        // giving the player their items back
         captchaPlayer.resetInventory();
         mapcha.getPlayerManager().removePlayer(captchaPlayer);
     }
 
-    @EventHandler(priority = EventPriority.HIGH)
+    @EventHandler
     public void onPlayerChatEvent(AsyncPlayerChatEvent event) {
 
+        // checking the the player is filling the captcha
         CaptchaPlayer player = mapcha.getPlayerManager().getPlayer(event.getPlayer());
-
         if (player != null) {
 
-            // captcha was not right
-            if (!event.getMessage().equals(player.getCaptcha())) {
+            // captcha success
+            if (event.getMessage().equals(player.getCaptcha())) {
+                player.getPlayer().sendMessage(prefix + " " + captchaSuccessMessage);
+                player.resetInventory();
+                mapcha.getPlayerManager().removePlayer(player);
+                sendPlayerToServer(player.getPlayer());
+            } else {
                 if (player.getTries() >= (captchaTries - 1)) { // kicking the player because he's out of tries
                     Bukkit.getScheduler().runTask(mapcha, () -> player.getPlayer().kickPlayer(prefix + " " + captchaFailMessage));
                 } else { // telling the player to try again
                     player.setTries(player.getTries() + 1);
                     player.getPlayer().sendMessage(prefix + " " + captchaRetryMessage.replace("{CURRENT}", String.valueOf(player.getTries())).replace("{MAX}", String.valueOf(captchaTries)));
                 }
-            } else { // captcha success
-                player.getPlayer().sendMessage(prefix + " " + captchaSuccessMessage);
-                player.resetInventory();
-                mapcha.getPlayerManager().removePlayer(player);
-                sendPlayerToServer(player.getPlayer());
             }
 
             event.setCancelled(true);
         }
     }
 
-    @EventHandler(priority = EventPriority.HIGH)
+    @EventHandler
     public void onCommand(PlayerCommandPreprocessEvent event) {
         event.setCancelled(mapcha.getPlayerManager().getPlayer(event.getPlayer()) != null && !validCommand(event.getMessage()));
     }
 
+    /**
+     * Checks if the message contains a command.
+     *
+     * @param message the message to check commands for
+     * @return whether the message contains a command or not
+     */
     private boolean validCommand(String message) {
         for (String command : commands) {
             if (message.contains(command)) {
@@ -108,6 +122,9 @@ public class PlayerEvent implements Listener {
         return false;
     }
 
+    /**
+     * @return a random string with len 4
+     */
     private String genCaptcha() {
         String charset = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
         StringBuilder random = new StringBuilder();
@@ -117,6 +134,11 @@ public class PlayerEvent implements Listener {
         return random.toString();
     }
 
+    /**
+     * Sends a player to a connected server after the captcha is completed.
+     *
+     * @param player the player to send
+     */
     private void sendPlayerToServer(Player player) {
         if (successServer != null && !successServer.isEmpty()) {
             ByteArrayDataOutput out = ByteStreams.newDataOutput();
