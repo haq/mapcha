@@ -1,4 +1,4 @@
-package me.affanhaq.mapcha.events;
+package me.affanhaq.mapcha.handlers;
 
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
@@ -22,11 +22,11 @@ import java.util.Random;
 
 import static me.affanhaq.mapcha.Mapcha.Config.*;
 
-public class PlayerEvent implements Listener {
+public class PlayerHandler implements Listener {
 
     private final Mapcha mapcha;
 
-    public PlayerEvent(Mapcha mapcha) {
+    public PlayerHandler(Mapcha mapcha) {
         this.mapcha = mapcha;
     }
 
@@ -87,6 +87,10 @@ public class PlayerEvent implements Listener {
         if (player == null) {
             return;
         }
+
+        // TODO: use custom events
+        //ExampleEvent exampleEvent = new ExampleEvent("Msrules123"); // Initialize your Event
+        //Bukkit.getPluginManager().callEvent(exampleEvent);
 
         // captcha success
         if (event.getMessage().equals(player.getCaptcha())) {

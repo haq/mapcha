@@ -1,4 +1,4 @@
-package me.affanhaq.mapcha.events;
+package me.affanhaq.mapcha.handlers;
 
 import me.affanhaq.mapcha.player.CaptchaPlayer;
 import me.affanhaq.mapcha.Mapcha;
@@ -14,11 +14,11 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-public class MapEvent implements Listener {
+public class MapHandler implements Listener {
 
     private final Mapcha mapcha;
 
-    public MapEvent(Mapcha mapcha) {
+    public MapHandler(Mapcha mapcha) {
         this.mapcha = mapcha;
     }
 
