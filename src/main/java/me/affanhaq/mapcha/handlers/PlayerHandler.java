@@ -1,8 +1,8 @@
 package me.affanhaq.mapcha.handlers;
 
-import com.google.common.io.ByteArrayDataOutput;
-import com.google.common.io.ByteStreams;
 import me.affanhaq.mapcha.Mapcha;
+import me.affanhaq.mapcha.events.CaptchaFailedEvent;
+import me.affanhaq.mapcha.events.CaptchaSuccessEvent;
 import me.affanhaq.mapcha.player.CaptchaPlayer;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -20,7 +20,8 @@ import org.bukkit.inventory.meta.ItemMeta;
 import java.util.Collections;
 import java.util.Random;
 
-import static me.affanhaq.mapcha.Mapcha.Config.*;
+import static me.affanhaq.mapcha.Mapcha.Config.commands;
+import static me.affanhaq.mapcha.Mapcha.Config.permission;
 
 public class PlayerHandler implements Listener {
 
@@ -30,7 +31,7 @@ public class PlayerHandler implements Listener {
         this.mapcha = mapcha;
     }
 
-    @EventHandler(priority = EventPriority.HIGH)
+    @EventHandler
     public void onJoin(PlayerJoinEvent event) {
 
         Player player = event.getPlayer();
@@ -38,7 +39,7 @@ public class PlayerHandler implements Listener {
         // player has permission to bypass the captcha
         // by default OPs have the '*' permission so this method will return true
         if (player.hasPermission(permission)) {
-            Bukkit.getScheduler().scheduleSyncDelayedTask(mapcha, () -> sendPlayerToServer(player), 15);
+            Bukkit.getScheduler().scheduleSyncDelayedTask(mapcha, () -> Mapcha.sendPlayerToServer(mapcha, player), 15);
             return;
         }
 
@@ -88,23 +89,11 @@ public class PlayerHandler implements Listener {
             return;
         }
 
-        // TODO: use custom events
-        //ExampleEvent exampleEvent = new ExampleEvent("Msrules123"); // Initialize your Event
-        //Bukkit.getPluginManager().callEvent(exampleEvent);
-
         // captcha success
         if (event.getMessage().equals(player.getCaptcha())) {
-            player.getPlayer().sendMessage(prefix + " " + captchaSuccessMessage);
-            player.resetInventory();
-            mapcha.getPlayerManager().removePlayer(player);
-            sendPlayerToServer(player.getPlayer());
+            Bukkit.getScheduler().runTask(mapcha, () -> Bukkit.getPluginManager().callEvent(new CaptchaSuccessEvent(player)));
         } else {
-            if (player.getTries() >= (captchaTries - 1)) { // kicking the player because he's out of tries
-                Bukkit.getScheduler().runTask(mapcha, () -> player.getPlayer().kickPlayer(prefix + " " + captchaFailMessage));
-            } else { // telling the player to try again
-                player.setTries(player.getTries() + 1);
-                player.getPlayer().sendMessage(prefix + " " + captchaRetryMessage.replace("{CURRENT}", String.valueOf(player.getTries())).replace("{MAX}", String.valueOf(captchaTries)));
-            }
+            Bukkit.getScheduler().runTask(mapcha, () -> Bukkit.getPluginManager().callEvent(new CaptchaFailedEvent(player)));
         }
 
         event.setCancelled(true);
@@ -142,20 +131,6 @@ public class PlayerHandler implements Listener {
             random.append(charset.charAt(new Random().nextInt(charset.length() - 1)));
         }
         return random.toString();
-    }
-
-    /**
-     * Sends a player to a connected server after the captcha is completed.
-     *
-     * @param player the player to send
-     */
-    private void sendPlayerToServer(Player player) {
-        if (successServer != null && !successServer.isEmpty()) {
-            ByteArrayDataOutput out = ByteStreams.newDataOutput();
-            out.writeUTF("Connect");
-            out.writeUTF(successServer);
-            player.sendPluginMessage(mapcha, "BungeeCord", out.toByteArray());
-        }
     }
 
 }
