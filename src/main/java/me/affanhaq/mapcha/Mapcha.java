@@ -13,15 +13,16 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
-import static me.affanhaq.mapcha.Mapcha.Config.successServer;
+import static me.affanhaq.mapcha.Mapcha.Config.sendToSuccessServer;
+import static me.affanhaq.mapcha.Mapcha.Config.successServerName;
 import static org.bukkit.ChatColor.*;
 
 public class Mapcha extends JavaPlugin {
 
     private final CaptchaPlayerManager playerManager = new CaptchaPlayerManager();
+    private final Set<UUID> completedCache = new HashSet<>();
 
     @Override
     public void onEnable() {
@@ -42,22 +43,25 @@ public class Mapcha extends JavaPlugin {
         return playerManager;
     }
 
+    public Set<UUID> getCompletedCache() {
+        return completedCache;
+    }
+
     /**
      * Sends a player to a connected server after the captcha is completed.
      *
      * @param player the player to send
      */
     public static void sendPlayerToServer(JavaPlugin javaPlugin, Player player) {
-        if (successServer != null && !successServer.isEmpty()) {
+        if (sendToSuccessServer && successServerName != null && !successServerName.isEmpty()) {
             ByteArrayDataOutput out = ByteStreams.newDataOutput();
             out.writeUTF("Connect");
-            out.writeUTF(successServer);
+            out.writeUTF(successServerName);
             player.sendPluginMessage(javaPlugin, "BungeeCord", out.toByteArray());
         }
     }
 
     public static class Config {
-
         public static String permission = "mapcha.bypass";
 
         @ConfigValue("prefix")
@@ -66,23 +70,29 @@ public class Mapcha extends JavaPlugin {
         @ConfigValue("commands")
         public static List<String> commands = Arrays.asList("/register", "/login");
 
-        @ConfigValue("tries")
-        public static int captchaTries = 3;
+        @ConfigValue("captcha.cache")
+        public static boolean useCompletedCache = true;
 
-        @ConfigValue("time_limit")
-        public static int captchaTimeLimit = 30;
+        @ConfigValue("captcha.tries")
+        public static int tries = 3;
 
-        @ConfigValue("success_server")
-        public static String successServer = "";
+        @ConfigValue("captcha.time")
+        public static int timeLimit = 30;
+
+        @ConfigValue("server.enabled")
+        public static boolean sendToSuccessServer = false;
+
+        @ConfigValue("server.name")
+        public static String successServerName = "";
 
         @ConfigValue("messages.success")
-        public static String captchaSuccessMessage = "Captcha " + GREEN + "solved!";
+        public static String successMessage = "Captcha " + GREEN + "solved!";
 
         @ConfigValue("messages.retry")
-        public static String captchaRetryMessage = "Captcha " + YELLOW + "failed, " + RESET + "please try again. ({CURRENT}/{MAX})";
+        public static String retryMessage = "Captcha " + YELLOW + "failed, " + RESET + "please try again. ({CURRENT}/{MAX})";
 
         @ConfigValue("messages.fail")
-        public static String captchaFailMessage = "Captcha " + RED + "failed!";
+        public static String failMessage = "Captcha " + RED + "failed!";
     }
 
 }

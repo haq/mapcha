@@ -20,8 +20,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import java.util.Collections;
 import java.util.Random;
 
-import static me.affanhaq.mapcha.Mapcha.Config.commands;
-import static me.affanhaq.mapcha.Mapcha.Config.permission;
+import static me.affanhaq.mapcha.Mapcha.Config.*;
 
 public class PlayerHandler implements Listener {
 
@@ -36,9 +35,9 @@ public class PlayerHandler implements Listener {
 
         Player player = event.getPlayer();
 
-        // player has permission to bypass the captcha
+        // checking if player has permission to bypass the captcha or player has already completed the captcha before
         // by default OPs have the '*' permission so this method will return true
-        if (player.hasPermission(permission)) {
+        if (player.hasPermission(permission) || (useCompletedCache && mapcha.getCompletedCache().contains(player.getUniqueId()))) {
             Bukkit.getScheduler().scheduleSyncDelayedTask(mapcha, () -> Mapcha.sendPlayerToServer(mapcha, player), 15);
             return;
         }

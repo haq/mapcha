@@ -1,13 +1,10 @@
 package me.affanhaq.mapcha.handlers;
 
-import com.google.common.io.ByteArrayDataOutput;
-import com.google.common.io.ByteStreams;
 import me.affanhaq.mapcha.Mapcha;
 import me.affanhaq.mapcha.events.CaptchaFailedEvent;
 import me.affanhaq.mapcha.events.CaptchaSuccessEvent;
 import me.affanhaq.mapcha.player.CaptchaPlayer;
 import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 
@@ -25,10 +22,16 @@ public class CaptchaHandler implements Listener {
     public void onCaptchaSuccess(CaptchaSuccessEvent event) {
         CaptchaPlayer player = event.getPlayer();
 
-        player.getPlayer().sendMessage(prefix + " " + captchaSuccessMessage);
+        player.getPlayer().sendMessage(prefix + " " + successMessage);
         player.resetInventory();
+
+        // adding the player to set so when he logs back in he won't have to complete the captcha again
+        if (useCompletedCache) {
+            mapcha.getCompletedCache().add(player.getPlayer().getUniqueId());
+        }
+
         mapcha.getPlayerManager().removePlayer(player);
-        sendPlayerToServer(player.getPlayer());
+        Mapcha.sendPlayerToServer(mapcha, player.getPlayer());
     }
 
     @EventHandler
@@ -36,27 +39,14 @@ public class CaptchaHandler implements Listener {
         CaptchaPlayer player = event.getPlayer();
 
         // kicking the player because he's out of tries
-        if (player.getTries() >= (captchaTries - 1)) {
-            Bukkit.getScheduler().runTask(mapcha, () -> player.getPlayer().kickPlayer(prefix + " " + captchaFailMessage));
+        if (player.getTries() >= (tries - 1)) {
+            Bukkit.getScheduler().runTask(mapcha, () -> player.getPlayer().kickPlayer(prefix + " " + failMessage));
         } else { // telling the player to try again
             player.setTries(player.getTries() + 1);
             player.getPlayer().sendMessage(
-                    prefix + " " + captchaRetryMessage.replace("{CURRENT}", String.valueOf(player.getTries())).replace("{MAX}", String.valueOf(captchaTries))
+                    prefix + " " + retryMessage.replace("{CURRENT}", String.valueOf(player.getTries())).replace("{MAX}", String.valueOf(tries))
             );
         }
     }
 
-    /**
-     * Sends a player to a connected server after the captcha is completed.
-     *
-     * @param player the player to send
-     */
-    private void sendPlayerToServer(Player player) {
-        if (successServer != null && !successServer.isEmpty()) {
-            ByteArrayDataOutput out = ByteStreams.newDataOutput();
-            out.writeUTF("Connect");
-            out.writeUTF(successServer);
-            player.sendPluginMessage(mapcha, "BungeeCord", out.toByteArray());
-        }
-    }
 }

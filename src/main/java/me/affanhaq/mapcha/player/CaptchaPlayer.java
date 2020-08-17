@@ -39,9 +39,9 @@ public class CaptchaPlayer {
         // starting a timer to kick the player if the captcha has not been finished
         player.getServer().getScheduler().scheduleSyncDelayedTask(mapcha, () -> {
             if (mapcha.getPlayerManager().getPlayer(player) != null) {
-                player.getPlayer().kickPlayer(prefix + " " + captchaFailMessage);
+                player.getPlayer().kickPlayer(prefix + " " + failMessage);
             }
-        }, captchaTimeLimit * 20);
+        }, timeLimit * 20);
     }
 
     /**
@@ -63,14 +63,14 @@ public class CaptchaPlayer {
         String sTries = "Tries Left: ";
         g.setColor(Color.WHITE);
         g.drawString(sTries, (int) ((image.getWidth() - g.getFontMetrics().getStringBounds(sTries, g).getWidth()) / 2), 45);
-        g.setColor((captchaTries - tries) == 1 ? Color.RED : Color.GREEN);
-        g.drawString(String.valueOf((captchaTries - tries)), (int) (((image.getWidth() - g.getFontMetrics().getStringBounds(sTries, g).getWidth()) / 2) + g.getFontMetrics().getStringBounds(sTries, g).getWidth() + 2), 45);
+        g.setColor((Mapcha.Config.tries - tries) == 1 ? Color.RED : Color.GREEN);
+        g.drawString(String.valueOf((Mapcha.Config.tries - tries)), (int) (((image.getWidth() - g.getFontMetrics().getStringBounds(sTries, g).getWidth()) / 2) + g.getFontMetrics().getStringBounds(sTries, g).getWidth() + 2), 45);
 
         String sTime = "Time Left: ";
         g.setColor(Color.WHITE);
         g.drawString(sTime, (int) ((image.getWidth() - g.getFontMetrics().getStringBounds(sTime, g).getWidth()) / 2), 55);
-        g.setColor((captchaTimeLimit * 1000) - (System.currentTimeMillis() - lastTime) == 1000 ? Color.RED : Color.GREEN);
-        g.drawString(new SimpleDateFormat("ss").format((captchaTimeLimit * 1000) - (System.currentTimeMillis() - lastTime)) + " sec", (int) (((image.getWidth() - g.getFontMetrics().getStringBounds(sTime, g).getWidth()) / 2) + g.getFontMetrics().getStringBounds(sTime, g).getWidth() + 2), 55);
+        g.setColor((timeLimit * 1000) - (System.currentTimeMillis() - lastTime) == 1000 ? Color.RED : Color.GREEN);
+        g.drawString(new SimpleDateFormat("ss").format((timeLimit * 1000) - (System.currentTimeMillis() - lastTime)) + " sec", (int) (((image.getWidth() - g.getFontMetrics().getStringBounds(sTime, g).getWidth()) / 2) + g.getFontMetrics().getStringBounds(sTime, g).getWidth() + 2), 55);
 
         g.setFont(new Font("Arial", Font.BOLD, 40));
         g.setColor(Color.WHITE);
