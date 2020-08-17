@@ -36,13 +36,15 @@ public class PlayerEvent implements Listener {
         Player player = event.getPlayer();
 
         // player has permission to bypass the captcha
+        // by default OPs have the '*' permission so this method will return true
         if (player.hasPermission(permission)) {
             Bukkit.getScheduler().scheduleSyncDelayedTask(mapcha, () -> sendPlayerToServer(player), 15);
             return;
         }
 
         // creating a captcha player
-        CaptchaPlayer captchaPlayer = new CaptchaPlayer(player, genCaptcha(), mapcha).cleanPlayer();
+        CaptchaPlayer captchaPlayer = new CaptchaPlayer(player, genCaptcha(), mapcha)
+                .cleanPlayer();
 
         // making a map for the player
         String version = Bukkit.getVersion();
@@ -65,15 +67,15 @@ public class PlayerEvent implements Listener {
     @EventHandler(priority = EventPriority.HIGH)
     public void onLeave(PlayerQuitEvent event) {
 
-        CaptchaPlayer captchaPlayer = mapcha.getPlayerManager().getPlayer(event.getPlayer());
+        CaptchaPlayer player = mapcha.getPlayerManager().getPlayer(event.getPlayer());
 
-        if (captchaPlayer == null) {
+        if (player == null) {
             return;
         }
 
         // giving the player their items back
-        captchaPlayer.resetInventory();
-        mapcha.getPlayerManager().removePlayer(captchaPlayer);
+        player.resetInventory();
+        mapcha.getPlayerManager().removePlayer(player);
     }
 
     @EventHandler
@@ -81,30 +83,34 @@ public class PlayerEvent implements Listener {
 
         // checking the the player is filling the captcha
         CaptchaPlayer player = mapcha.getPlayerManager().getPlayer(event.getPlayer());
-        if (player != null) {
 
-            // captcha success
-            if (event.getMessage().equals(player.getCaptcha())) {
-                player.getPlayer().sendMessage(prefix + " " + captchaSuccessMessage);
-                player.resetInventory();
-                mapcha.getPlayerManager().removePlayer(player);
-                sendPlayerToServer(player.getPlayer());
-            } else {
-                if (player.getTries() >= (captchaTries - 1)) { // kicking the player because he's out of tries
-                    Bukkit.getScheduler().runTask(mapcha, () -> player.getPlayer().kickPlayer(prefix + " " + captchaFailMessage));
-                } else { // telling the player to try again
-                    player.setTries(player.getTries() + 1);
-                    player.getPlayer().sendMessage(prefix + " " + captchaRetryMessage.replace("{CURRENT}", String.valueOf(player.getTries())).replace("{MAX}", String.valueOf(captchaTries)));
-                }
-            }
-
-            event.setCancelled(true);
+        if (player == null) {
+            return;
         }
+
+        // captcha success
+        if (event.getMessage().equals(player.getCaptcha())) {
+            player.getPlayer().sendMessage(prefix + " " + captchaSuccessMessage);
+            player.resetInventory();
+            mapcha.getPlayerManager().removePlayer(player);
+            sendPlayerToServer(player.getPlayer());
+        } else {
+            if (player.getTries() >= (captchaTries - 1)) { // kicking the player because he's out of tries
+                Bukkit.getScheduler().runTask(mapcha, () -> player.getPlayer().kickPlayer(prefix + " " + captchaFailMessage));
+            } else { // telling the player to try again
+                player.setTries(player.getTries() + 1);
+                player.getPlayer().sendMessage(prefix + " " + captchaRetryMessage.replace("{CURRENT}", String.valueOf(player.getTries())).replace("{MAX}", String.valueOf(captchaTries)));
+            }
+        }
+
+        event.setCancelled(true);
     }
 
     @EventHandler
     public void onCommand(PlayerCommandPreprocessEvent event) {
-        event.setCancelled(mapcha.getPlayerManager().getPlayer(event.getPlayer()) != null && !validCommand(event.getMessage()));
+        event.setCancelled(
+                mapcha.getPlayerManager().getPlayer(event.getPlayer()) != null && !validCommand(event.getMessage())
+        );
     }
 
     /**

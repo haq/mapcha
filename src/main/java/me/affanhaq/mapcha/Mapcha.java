@@ -50,7 +50,7 @@ public class Mapcha extends JavaPlugin {
         public static int captchaTries = 3;
 
         @ConfigValue("time_limit")
-        public static int captchaTimeLimit = 10;
+        public static int captchaTimeLimit = 30;
 
         @ConfigValue("success_server")
         public static String successServer = "";

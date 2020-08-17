@@ -4,6 +4,7 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 public class CaptchaPlayerManager {
@@ -21,7 +22,8 @@ public class CaptchaPlayerManager {
     @Nullable
     public CaptchaPlayer getPlayer(Player player) {
         return playerList.stream()
-                .filter(p -> p.getPlayer().getUniqueId() == player.getPlayer().getUniqueId())
-                .findFirst().orElse(null);
+                .filter(p -> p.getPlayer().getUniqueId() == Objects.requireNonNull(player.getPlayer()).getUniqueId())
+                .findFirst()
+                .orElse(null);
     }
 }

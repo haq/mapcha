@@ -29,7 +29,7 @@ public class CaptchaPlayer {
         this.player = player;
         this.captcha = captcha;
 
-        // getting the players
+        // getting the players inventory & armor
         contents = player.getInventory().getContents();
         armour = player.getInventory().getArmorContents();
 
@@ -50,12 +50,13 @@ public class CaptchaPlayer {
      * @return the rendered captcha
      */
     public BufferedImage render() {
+        String title = "Captcha";
 
         BufferedImage image = new BufferedImage(130, 130, BufferedImage.TYPE_INT_RGB);
         Graphics g = image.getGraphics();
 
         g.setFont(new Font("Arial", Font.BOLD, 30));
-        g.drawString("Mapcha", (int) ((image.getWidth() - g.getFontMetrics().getStringBounds("Mapcha", g).getWidth()) / 2), 30);
+        g.drawString(title, (int) ((image.getWidth() - g.getFontMetrics().getStringBounds(title, g).getWidth()) / 2), 30);
 
         g.setFont(new Font("Arial", Font.BOLD, 10));
 
@@ -82,16 +83,15 @@ public class CaptchaPlayer {
      * Gives the players items back.
      */
     public void resetInventory() {
-        getPlayer().getInventory().setContents(contents);
-        getPlayer().getInventory().setArmorContents(armour);
-        getPlayer().updateInventory();
+        player.getInventory().setContents(contents);
+        player.getInventory().setArmorContents(armour);
+        player.updateInventory();
     }
 
     public CaptchaPlayer cleanPlayer() {
         player.getInventory().clear();
         player.getInventory().setArmorContents(null);
-        getPlayer().updateInventory();
-        tries = 0;
+        player.updateInventory();
         return this;
     }
 

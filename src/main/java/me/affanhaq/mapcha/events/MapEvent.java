@@ -10,12 +10,13 @@ import org.bukkit.event.server.MapInitializeEvent;
 import org.bukkit.map.MapCanvas;
 import org.bukkit.map.MapRenderer;
 import org.bukkit.map.MapView;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
 public class MapEvent implements Listener {
 
-    private Mapcha mapcha;
+    private final Mapcha mapcha;
 
     public MapEvent(Mapcha mapcha) {
         this.mapcha = mapcha;
@@ -32,7 +33,7 @@ public class MapEvent implements Listener {
 
         map.addRenderer(new MapRenderer() {
             @Override
-            public void render(MapView mapView, MapCanvas mapCanvas, Player player) {
+            public void render(@NotNull MapView mapView, @NotNull MapCanvas mapCanvas, @NotNull Player player) {
                 CaptchaPlayer p = mapcha.getPlayerManager().getPlayer(player);
                 if (p == null) {
                     old.forEach(map::addRenderer);
