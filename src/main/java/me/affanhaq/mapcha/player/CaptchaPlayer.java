@@ -29,7 +29,7 @@ public class CaptchaPlayer {
         this.player = player;
         this.captcha = captcha;
 
-        // getting the players
+        // getting the players inventory & armor
         contents = player.getInventory().getContents();
         armour = player.getInventory().getArmorContents();
 
@@ -39,9 +39,9 @@ public class CaptchaPlayer {
         // starting a timer to kick the player if the captcha has not been finished
         player.getServer().getScheduler().scheduleSyncDelayedTask(mapcha, () -> {
             if (mapcha.getPlayerManager().getPlayer(player) != null) {
-                player.getPlayer().kickPlayer(prefix + " " + captchaFailMessage);
+                player.getPlayer().kickPlayer(prefix + " " + failMessage);
             }
-        }, captchaTimeLimit * 20);
+        }, timeLimit * 20);
     }
 
     /**
@@ -50,26 +50,27 @@ public class CaptchaPlayer {
      * @return the rendered captcha
      */
     public BufferedImage render() {
+        String title = "Captcha";
 
         BufferedImage image = new BufferedImage(130, 130, BufferedImage.TYPE_INT_RGB);
         Graphics g = image.getGraphics();
 
         g.setFont(new Font("Arial", Font.BOLD, 30));
-        g.drawString("Mapcha", (int) ((image.getWidth() - g.getFontMetrics().getStringBounds("Mapcha", g).getWidth()) / 2), 30);
+        g.drawString(title, (int) ((image.getWidth() - g.getFontMetrics().getStringBounds(title, g).getWidth()) / 2), 30);
 
         g.setFont(new Font("Arial", Font.BOLD, 10));
 
         String sTries = "Tries Left: ";
         g.setColor(Color.WHITE);
         g.drawString(sTries, (int) ((image.getWidth() - g.getFontMetrics().getStringBounds(sTries, g).getWidth()) / 2), 45);
-        g.setColor((captchaTries - tries) == 1 ? Color.RED : Color.GREEN);
-        g.drawString(String.valueOf((captchaTries - tries)), (int) (((image.getWidth() - g.getFontMetrics().getStringBounds(sTries, g).getWidth()) / 2) + g.getFontMetrics().getStringBounds(sTries, g).getWidth() + 2), 45);
+        g.setColor((Mapcha.Config.tries - tries) == 1 ? Color.RED : Color.GREEN);
+        g.drawString(String.valueOf((Mapcha.Config.tries - tries)), (int) (((image.getWidth() - g.getFontMetrics().getStringBounds(sTries, g).getWidth()) / 2) + g.getFontMetrics().getStringBounds(sTries, g).getWidth() + 2), 45);
 
         String sTime = "Time Left: ";
         g.setColor(Color.WHITE);
         g.drawString(sTime, (int) ((image.getWidth() - g.getFontMetrics().getStringBounds(sTime, g).getWidth()) / 2), 55);
-        g.setColor((captchaTimeLimit * 1000) - (System.currentTimeMillis() - lastTime) == 1000 ? Color.RED : Color.GREEN);
-        g.drawString(new SimpleDateFormat("ss").format((captchaTimeLimit * 1000) - (System.currentTimeMillis() - lastTime)) + " sec", (int) (((image.getWidth() - g.getFontMetrics().getStringBounds(sTime, g).getWidth()) / 2) + g.getFontMetrics().getStringBounds(sTime, g).getWidth() + 2), 55);
+        g.setColor((timeLimit * 1000) - (System.currentTimeMillis() - lastTime) == 1000 ? Color.RED : Color.GREEN);
+        g.drawString(new SimpleDateFormat("ss").format((timeLimit * 1000) - (System.currentTimeMillis() - lastTime)) + " sec", (int) (((image.getWidth() - g.getFontMetrics().getStringBounds(sTime, g).getWidth()) / 2) + g.getFontMetrics().getStringBounds(sTime, g).getWidth() + 2), 55);
 
         g.setFont(new Font("Arial", Font.BOLD, 40));
         g.setColor(Color.WHITE);
@@ -82,16 +83,15 @@ public class CaptchaPlayer {
      * Gives the players items back.
      */
     public void resetInventory() {
-        getPlayer().getInventory().setContents(contents);
-        getPlayer().getInventory().setArmorContents(armour);
-        getPlayer().updateInventory();
+        player.getInventory().setContents(contents);
+        player.getInventory().setArmorContents(armour);
+        player.updateInventory();
     }
 
     public CaptchaPlayer cleanPlayer() {
         player.getInventory().clear();
         player.getInventory().setArmorContents(null);
-        getPlayer().updateInventory();
-        tries = 0;
+        player.updateInventory();
         return this;
     }
 
