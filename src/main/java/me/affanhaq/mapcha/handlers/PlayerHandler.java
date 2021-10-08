@@ -4,6 +4,7 @@ import me.affanhaq.mapcha.Mapcha;
 import me.affanhaq.mapcha.events.CaptchaFailedEvent;
 import me.affanhaq.mapcha.events.CaptchaSuccessEvent;
 import me.affanhaq.mapcha.player.CaptchaPlayer;
+import me.affanhaq.mapcha.tasks.SendPlayerToServerTask;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -20,7 +21,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import java.util.Collections;
 import java.util.Random;
 
-import static me.affanhaq.mapcha.Mapcha.Config.*;
+import static me.affanhaq.mapcha.Config.*;
 
 public class PlayerHandler implements Listener {
 
@@ -37,23 +38,36 @@ public class PlayerHandler implements Listener {
 
         // checking if player has permission to bypass the captcha or player has already completed the captcha before
         // by default OPs have the '*' permission so this method will return true
-        if (player.hasPermission(permission) || (useCompletedCache && mapcha.getCompletedCache().contains(player.getUniqueId()))) {
-            Bukkit.getScheduler().scheduleSyncDelayedTask(mapcha, () -> Mapcha.sendPlayerToServer(mapcha, player), 15);
+        if (player.hasPermission(BYPASS_PERMISSION) || (USE_CACHE && mapcha.getCacheManager().isCached(player))) {
+            Bukkit.getScheduler().scheduleSyncDelayedTask(
+                    mapcha,
+                    new SendPlayerToServerTask(mapcha, player),
+                    SendPlayerToServerTask.delay()
+            );
             return;
         }
 
         // creating a captcha player
-        CaptchaPlayer captchaPlayer = new CaptchaPlayer(player, genCaptcha(), mapcha)
-                .cleanPlayer();
+        CaptchaPlayer captchaPlayer = new CaptchaPlayer(
+                player,
+                genCaptcha(),
+                mapcha
+        ).cleanPlayer();
 
-        // making a map for the player
+        // getting the map itemstack depending ont he spigot version
         String version = Bukkit.getVersion();
         ItemStack itemStack;
-        if (version.contains("1.13") || version.contains("1.14") || version.contains("1.15") || version.contains("1.16")) {
+        if (version.contains("1.13") ||
+                version.contains("1.14") ||
+                version.contains("1.15") ||
+                version.contains("1.16") ||
+                version.contains("1.17")) {
             itemStack = new ItemStack(Material.valueOf("LEGACY_EMPTY_MAP"));
         } else {
             itemStack = new ItemStack(Material.valueOf("EMPTY_MAP"));
         }
+
+        // setting the item metadata
         ItemMeta itemMeta = itemStack.getItemMeta();
         itemMeta.setDisplayName("Mapcha");
         itemMeta.setLore(Collections.singletonList("Open the map to see the captcha."));
@@ -61,7 +75,7 @@ public class PlayerHandler implements Listener {
 
         // giving the player the map and adding them to the captcha array
         captchaPlayer.getPlayer().getInventory().setItemInHand(itemStack);
-        mapcha.getPlayerManager().addPlayer(captchaPlayer);
+        mapcha.getPlayerManager().add(captchaPlayer);
     }
 
     @EventHandler(priority = EventPriority.HIGH)
@@ -74,14 +88,16 @@ public class PlayerHandler implements Listener {
         }
 
         // giving the player their items back
-        player.resetInventory();
-        mapcha.getPlayerManager().removePlayer(player);
+        player.rollbackInventory();
+
+        // removing the player from the captcha list
+        mapcha.getPlayerManager().remove(player);
     }
 
     @EventHandler
     public void onPlayerChatEvent(AsyncPlayerChatEvent event) {
 
-        // checking the the player is filling the captcha
+        // checking if the player is filling the captcha
         CaptchaPlayer player = mapcha.getPlayerManager().getPlayer(event.getPlayer());
 
         if (player == null) {
@@ -112,7 +128,7 @@ public class PlayerHandler implements Listener {
      * @return whether the message contains a command or not
      */
     private boolean validCommand(String message) {
-        for (String command : commands) {
+        for (String command : ALLOWED_COMMANDS) {
             if (message.contains(command)) {
                 return true;
             }

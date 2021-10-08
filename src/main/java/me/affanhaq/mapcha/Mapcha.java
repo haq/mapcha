@@ -3,27 +3,23 @@ package me.affanhaq.mapcha;
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
 import me.affanhaq.keeper.Keeper;
-import me.affanhaq.keeper.data.ConfigFile;
-import me.affanhaq.keeper.data.ConfigValue;
 import me.affanhaq.mapcha.handlers.CaptchaHandler;
 import me.affanhaq.mapcha.handlers.MapHandler;
 import me.affanhaq.mapcha.handlers.PlayerHandler;
-import me.affanhaq.mapcha.player.CaptchaPlayerManager;
+import me.affanhaq.mapcha.managers.CacheManager;
+import me.affanhaq.mapcha.managers.CaptchaPlayerManager;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.util.*;
-
-import static me.affanhaq.mapcha.Mapcha.Config.sendToSuccessServer;
-import static me.affanhaq.mapcha.Mapcha.Config.successServerName;
-import static org.bukkit.ChatColor.*;
+import static me.affanhaq.mapcha.Config.SEND_TO_SERVER;
+import static me.affanhaq.mapcha.Config.SUCCESS_SERVER;
 
 public class Mapcha extends JavaPlugin {
 
     private final CaptchaPlayerManager playerManager = new CaptchaPlayerManager();
-    private final Set<UUID> completedCache = new HashSet<>();
+    private final CacheManager cacheManager = new CacheManager();
 
     @Override
     public void onEnable() {
@@ -44,57 +40,21 @@ public class Mapcha extends JavaPlugin {
         return playerManager;
     }
 
-    public Set<UUID> getCompletedCache() {
-        return completedCache;
-    }
-
     /**
      * Sends a player to a connected server after the captcha is completed.
      *
      * @param player the player to send
      */
-    public static void sendPlayerToServer(JavaPlugin javaPlugin, Player player) {
-        if (sendToSuccessServer && successServerName != null && !successServerName.isEmpty()) {
+    public void sendPlayerToServer(Player player) {
+        if (SEND_TO_SERVER && SUCCESS_SERVER != null && !SUCCESS_SERVER.isEmpty()) {
             ByteArrayDataOutput out = ByteStreams.newDataOutput();
             out.writeUTF("Connect");
-            out.writeUTF(successServerName);
-            player.sendPluginMessage(javaPlugin, "BungeeCord", out.toByteArray());
+            out.writeUTF(SUCCESS_SERVER);
+            player.sendPluginMessage(this, "BungeeCord", out.toByteArray());
         }
     }
 
-    @ConfigFile("config.yml")
-    public static class Config {
-        public static String permission = "mapcha.bypass";
-
-        @ConfigValue("prefix")
-        public static String prefix = "[" + GREEN + "Mapcha" + RESET + "]";
-
-        @ConfigValue("commands")
-        public static List<String> commands = Arrays.asList("/register", "/login");
-
-        @ConfigValue("captcha.cache")
-        public static boolean useCompletedCache = true;
-
-        @ConfigValue("captcha.tries")
-        public static int tries = 3;
-
-        @ConfigValue("captcha.time")
-        public static int timeLimit = 30;
-
-        @ConfigValue("server.enabled")
-        public static boolean sendToSuccessServer = false;
-
-        @ConfigValue("server.name")
-        public static String successServerName = "";
-
-        @ConfigValue("messages.success")
-        public static String successMessage = "Captcha " + GREEN + "solved!";
-
-        @ConfigValue("messages.retry")
-        public static String retryMessage = "Captcha " + YELLOW + "failed, " + RESET + "please try again. ({CURRENT}/{MAX})";
-
-        @ConfigValue("messages.fail")
-        public static String failMessage = "Captcha " + RED + "failed!";
+    public CacheManager getCacheManager() {
+        return cacheManager;
     }
-
 }
