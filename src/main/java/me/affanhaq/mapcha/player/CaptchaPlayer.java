@@ -60,7 +60,7 @@ public class CaptchaPlayer {
         g.setColor(background);
         g.fillRect(0, 0, image.getWidth(), image.getHeight());
 
-        String title = "Captcha";
+        String title = Config.TITLE;
         g.setColor(foreground);
         g.setFont(new Font("Arial", Font.BOLD, 30));
         g.drawString(title, (int) ((image.getWidth() - g.getFontMetrics().getStringBounds(title, g).getWidth()) / 2), 30);

@@ -13,6 +13,9 @@ public class Config {
 
     public static String BYPASS_PERMISSION = "mapcha.bypass";
 
+    @ConfigValue("title")
+    public static String TITLE = "Captcha";
+
     @ConfigValue("prefix")
     public static String PREFIX = "[" + GREEN + "Mapcha" + RESET + "]";
 
