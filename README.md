@@ -7,7 +7,7 @@ A simple captcha plugin, which uses maps as the captcha.
 On player join, the player's inventory is cleared, and they are given an empty map. On right-click, the captcha will show. From there the player will have a fixed amount of time to complete the captcha. The player also has a limited number of tries. Once the time has reached or the tries limit has been reached the player is kicked. If the captcha is completed the player's items are returned to them.
 
 ### Screenshot
-![screenshot](https://i.imgur.com/2gK9mEV.png)
+![screenshot](https://i.imgur.com/2gK9mEV.p![img_1.png](img_1.png)n![img.png](img.png)g)
 
 ### Permissions
 * mapcha.bypass
@@ -16,6 +16,7 @@ On player join, the player's inventory is cleared, and they are given an empty m
 ### Default config
 ```yaml
 # Prefix used for the messages sent.
+title: 'Captcha'
 prefix: '[&aMapcha&r]'
 
 # Commands the player is allowed to type while in captcha mode.
@@ -41,7 +42,6 @@ server:
   name: ''
 
 messages:
-  
   # The success message the player receives after they solve the captcha.
   success: Captcha &asolved!
 
@@ -50,4 +50,12 @@ messages:
 
   # The fail message the player receives after they fail the captcha.
   fail: Captcha &cfailed!
+
+styles:
+  # Use black(white) background, white(black) foreground.
+  invert-color: false
+  # Draw points on the captcha image
+  points: true
+  # Draw lines on the captcha image
+  lines: true
 ```
