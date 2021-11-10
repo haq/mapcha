@@ -52,7 +52,6 @@ public class CaptchaPlayer {
      * @return the rendered captcha
      */
     public BufferedImage render() {
-        String title = "Captcha";
         Color background = Config.INVERT_COLOR ? Color.WHITE : Color.BLACK;
         Color foreground = Config.INVERT_COLOR ? Color.BLACK : Color.WHITE;
 
@@ -61,6 +60,8 @@ public class CaptchaPlayer {
         g.setColor(background);
         g.fillRect(0, 0, image.getWidth(), image.getHeight());
 
+        String title = "Captcha";
+        g.setColor(foreground);
         g.setFont(new Font("Arial", Font.BOLD, 30));
         g.drawString(title, (int) ((image.getWidth() - g.getFontMetrics().getStringBounds(title, g).getWidth()) / 2), 30);
 
