@@ -23,7 +23,7 @@ public class MapHandler implements Listener {
     }
 
     @EventHandler(priority = EventPriority.HIGH)
-    public void onMapInitilize(MapInitializeEvent event) {
+    public void onMapInitialize(MapInitializeEvent event) {
         MapView map = event.getMap();
         List<MapRenderer> old = map.getRenderers();
 

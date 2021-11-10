@@ -1,7 +1,7 @@
 package me.affanhaq.mapcha.handlers;
 
 import me.affanhaq.mapcha.Mapcha;
-import me.affanhaq.mapcha.events.CaptchaFailedEvent;
+import me.affanhaq.mapcha.events.CaptchaFailureEvent;
 import me.affanhaq.mapcha.events.CaptchaSuccessEvent;
 import me.affanhaq.mapcha.player.CaptchaPlayer;
 import me.affanhaq.mapcha.tasks.KickPlayerTask;
@@ -42,10 +42,10 @@ public class CaptchaHandler implements Listener {
     }
 
     @EventHandler
-    public void onCaptchaFail(CaptchaFailedEvent event) {
+    public void onCaptchaFail(CaptchaFailureEvent event) {
         CaptchaPlayer player = event.getPlayer();
 
-        // kicking the player because he's out of tries
+        // kick the player because he's out of tries
         if (player.getTries() >= (TRIES - 1)) {
 
             // cancel kick task
@@ -56,10 +56,10 @@ public class CaptchaHandler implements Listener {
 
         } else {
 
-            // incrementing the players tries
+            // increment the players tries
             player.incrementTries();
 
-            // notifing the player of how many tries they have left
+            // notify the player of how many tries they have left
             player.getPlayer().sendMessage(
                     PREFIX + " " + MESSAGE_RETRY.replace("{CURRENT}", String.valueOf(player.getTries())).replace("{MAX}", String.valueOf(TRIES))
             );

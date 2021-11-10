@@ -1,7 +1,7 @@
 package me.affanhaq.mapcha.handlers;
 
 import me.affanhaq.mapcha.Mapcha;
-import me.affanhaq.mapcha.events.CaptchaFailedEvent;
+import me.affanhaq.mapcha.events.CaptchaFailureEvent;
 import me.affanhaq.mapcha.events.CaptchaSuccessEvent;
 import me.affanhaq.mapcha.player.CaptchaPlayer;
 import me.affanhaq.mapcha.tasks.SendPlayerToServerTask;
@@ -79,7 +79,7 @@ public class PlayerHandler implements Listener {
     }
 
     @EventHandler(priority = EventPriority.HIGH)
-    public void onLeave(PlayerQuitEvent event) {
+    public void onQuit(PlayerQuitEvent event) {
 
         CaptchaPlayer player = mapcha.getPlayerManager().getPlayer(event.getPlayer());
 
@@ -108,7 +108,7 @@ public class PlayerHandler implements Listener {
         if (event.getMessage().equals(player.getCaptcha())) {
             Bukkit.getScheduler().runTask(mapcha, () -> Bukkit.getPluginManager().callEvent(new CaptchaSuccessEvent(player)));
         } else {
-            Bukkit.getScheduler().runTask(mapcha, () -> Bukkit.getPluginManager().callEvent(new CaptchaFailedEvent(player)));
+            Bukkit.getScheduler().runTask(mapcha, () -> Bukkit.getPluginManager().callEvent(new CaptchaFailureEvent(player)));
         }
 
         event.setCancelled(true);
