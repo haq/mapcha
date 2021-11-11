@@ -53,10 +53,13 @@ messages:
   fail: Captcha &cfailed!
 
 styles:
+
   # Use black(white) background, white(black) foreground.
-  invert-color: false
+  invert_color: false
+  
   # Draw points on the captcha image
   points: true
+  
   # Draw lines on the captcha image
   lines: true
 ```
