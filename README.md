@@ -7,7 +7,7 @@ A simple captcha plugin, which uses maps as the captcha.
 On player join, the player's inventory is cleared, and they are given an empty map. On right-click, the captcha will show. From there the player will have a fixed amount of time to complete the captcha. The player also has a limited number of tries. Once the time has reached or the tries limit has been reached the player is kicked. If the captcha is completed the player's items are returned to them.
 
 ### Screenshot
-![screenshot](https://i.imgur.com/2gK9mEV.p![img_1.png](img_1.png)n![img.png](img.png)g)
+![screenshot](https://i.imgur.com/2gK9mEV.png)
 
 ### Permissions
 * mapcha.bypass
