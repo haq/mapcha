@@ -46,7 +46,7 @@ public class Config {
     @ConfigValue("messages.fail")
     public static String MESSAGE_FAIL = "Captcha " + RED + "failed!";
 
-    @ConfigValue("styles.invert-color")
+    @ConfigValue("styles.invert_color")
     public static boolean INVERT_COLOR = false;
 
     @ConfigValue("styles.points")
