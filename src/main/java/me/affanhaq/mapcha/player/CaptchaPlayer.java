@@ -86,7 +86,6 @@ public class CaptchaPlayer {
         Random random = new Random(seed);
         if (Config.POINTS) {
             for (int i = 0; i < 100; i++) {
-                // remove plus/minus sign bit
                 int x = random.nextInt(image.getWidth());
                 int y = random.nextInt(image.getHeight() / 2) + image.getHeight() / 2;
                 g.drawOval(x, y, 1, 1);
