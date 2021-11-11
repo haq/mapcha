@@ -15,6 +15,8 @@ On player join, the player's inventory is cleared, and they are given an empty m
 
 ### Default config
 ```yaml
+# Title shown on the map
+title: 'Captcha'
 # Prefix used for the messages sent.
 prefix: '[&aMapcha&r]'
 
@@ -41,7 +43,6 @@ server:
   name: ''
 
 messages:
-  
   # The success message the player receives after they solve the captcha.
   success: Captcha &asolved!
 
@@ -50,4 +51,15 @@ messages:
 
   # The fail message the player receives after they fail the captcha.
   fail: Captcha &cfailed!
+
+styles:
+
+  # Use black(white) background, white(black) foreground.
+  invert_color: false
+  
+  # Draw points on the captcha image
+  points: true
+  
+  # Draw lines on the captcha image
+  lines: true
 ```

@@ -5,11 +5,11 @@ import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 import org.jetbrains.annotations.NotNull;
 
-public class CaptchaFailedEvent extends Event {
+public class CaptchaFailureEvent extends Event {
     private static final HandlerList HANDLERS = new HandlerList();
     private final CaptchaPlayer player;
 
-    public CaptchaFailedEvent(CaptchaPlayer player) {
+    public CaptchaFailureEvent(CaptchaPlayer player) {
         this.player = player;
     }
 

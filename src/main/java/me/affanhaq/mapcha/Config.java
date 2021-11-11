@@ -13,6 +13,9 @@ public class Config {
 
     public static String BYPASS_PERMISSION = "mapcha.bypass";
 
+    @ConfigValue("title")
+    public static String TITLE = "Captcha";
+
     @ConfigValue("prefix")
     public static String PREFIX = "[" + GREEN + "Mapcha" + RESET + "]";
 
@@ -42,4 +45,14 @@ public class Config {
 
     @ConfigValue("messages.fail")
     public static String MESSAGE_FAIL = "Captcha " + RED + "failed!";
+
+    @ConfigValue("styles.invert_color")
+    public static boolean INVERT_COLOR = false;
+
+    @ConfigValue("styles.points")
+    public static boolean POINTS = true;
+
+    @ConfigValue("styles.lines")
+    public static boolean LINES = true;
+
 }
