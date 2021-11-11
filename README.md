@@ -15,8 +15,9 @@ On player join, the player's inventory is cleared, and they are given an empty m
 
 ### Default config
 ```yaml
-# Prefix used for the messages sent.
+# Title shown on the map
 title: 'Captcha'
+# Prefix used for the messages sent.
 prefix: '[&aMapcha&r]'
 
 # Commands the player is allowed to type while in captcha mode.
