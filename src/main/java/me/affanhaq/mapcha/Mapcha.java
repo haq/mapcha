@@ -1,7 +1,5 @@
 package me.affanhaq.mapcha;
 
-import com.google.common.io.ByteArrayDataOutput;
-import com.google.common.io.ByteStreams;
 import me.affanhaq.keeper.Keeper;
 import me.affanhaq.mapcha.handlers.CaptchaHandler;
 import me.affanhaq.mapcha.handlers.MapHandler;
@@ -9,12 +7,8 @@ import me.affanhaq.mapcha.handlers.PlayerHandler;
 import me.affanhaq.mapcha.managers.CacheManager;
 import me.affanhaq.mapcha.managers.CaptchaPlayerManager;
 import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
-
-import static me.affanhaq.mapcha.Config.SEND_TO_SERVER;
-import static me.affanhaq.mapcha.Config.SUCCESS_SERVER;
 
 public class Mapcha extends JavaPlugin {
 
@@ -38,20 +32,6 @@ public class Mapcha extends JavaPlugin {
 
     public CaptchaPlayerManager getPlayerManager() {
         return playerManager;
-    }
-
-    /**
-     * Sends a player to a connected server after the captcha is completed.
-     *
-     * @param player the player to send
-     */
-    public void sendPlayerToServer(Player player) {
-        if (SEND_TO_SERVER && SUCCESS_SERVER != null && !SUCCESS_SERVER.isEmpty()) {
-            ByteArrayDataOutput out = ByteStreams.newDataOutput();
-            out.writeUTF("Connect");
-            out.writeUTF(SUCCESS_SERVER);
-            player.sendPluginMessage(this, "BungeeCord", out.toByteArray());
-        }
     }
 
     public CacheManager getCacheManager() {

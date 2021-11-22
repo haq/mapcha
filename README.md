@@ -1,13 +1,19 @@
-[![license](https://img.shields.io/github/license/mashape/apistatus.svg) ](LICENSE)
+[![license](https://img.shields.io/github/license/mashape/apistatus.svg)](LICENSE)
 
 # mapcha
 A simple captcha plugin, which uses maps as the captcha.
 
 ### Description
-On player join, the player's inventory is cleared, and they are given an empty map. On right-click, the captcha will show. From there the player will have a fixed amount of time to complete the captcha. The player also has a limited number of tries. Once the time has reached or the tries limit has been reached the player is kicked. If the captcha is completed the player's items are returned to them.
+- On player join, the player's inventory is cleared, and they are given an empty map. 
+- On right-click, the captcha will show.
+- From there the player will have a fixed amount of time to complete the captcha. 
+- The player also has a limited number of tries. 
+- Once the time has reached or the tries limit has been reached the player is kicked. 
+- If the captcha is completed the player's items are returned to them.
 
 ### Screenshot
-![screenshot](https://i.imgur.com/2gK9mEV.png)
+![screenshot](https://user-images.githubusercontent.com/26406334/141121824-4834f3f2-bdbd-4390-b175-5d50c6119f76.png)
+![screenshot](https://user-images.githubusercontent.com/26406334/141121799-10fc1365-650a-4506-8189-c6abe7f50605.png)
 
 ### Permissions
 * mapcha.bypass
@@ -17,6 +23,7 @@ On player join, the player's inventory is cleared, and they are given an empty m
 ```yaml
 # Title shown on the map
 title: 'Captcha'
+
 # Prefix used for the messages sent.
 prefix: '[&aMapcha&r]'
 

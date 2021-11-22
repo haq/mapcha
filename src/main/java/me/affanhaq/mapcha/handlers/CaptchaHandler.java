@@ -5,6 +5,7 @@ import me.affanhaq.mapcha.events.CaptchaFailureEvent;
 import me.affanhaq.mapcha.events.CaptchaSuccessEvent;
 import me.affanhaq.mapcha.player.CaptchaPlayer;
 import me.affanhaq.mapcha.tasks.KickPlayerTask;
+import me.affanhaq.mapcha.tasks.SendPlayerToServerTask;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -38,7 +39,11 @@ public class CaptchaHandler implements Listener {
         player.cancelKickTask();
 
         mapcha.getPlayerManager().remove(player);
-        mapcha.sendPlayerToServer(player.getPlayer());
+        Bukkit.getScheduler().scheduleSyncDelayedTask(
+                mapcha,
+                new SendPlayerToServerTask(mapcha, player.getPlayer()),
+                SendPlayerToServerTask.delay()
+        );
     }
 
     @EventHandler
