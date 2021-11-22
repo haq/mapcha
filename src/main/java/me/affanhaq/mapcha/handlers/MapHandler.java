@@ -2,6 +2,7 @@ package me.affanhaq.mapcha.handlers;
 
 import me.affanhaq.mapcha.Mapcha;
 import me.affanhaq.mapcha.player.CaptchaPlayer;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -35,7 +36,7 @@ public class MapHandler implements Listener {
             public void render(@NotNull MapView mapView, @NotNull MapCanvas mapCanvas, @NotNull Player player) {
                 CaptchaPlayer p = mapcha.getPlayerManager().getPlayer(player);
                 if (p == null) {
-                    old.forEach(map::addRenderer);
+                    Bukkit.getScheduler().runTask(mapcha, () -> old.forEach(map::addRenderer));
                 } else {
                     mapCanvas.drawImage(0, 0, p.render());
                 }
