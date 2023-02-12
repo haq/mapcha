@@ -241,7 +241,6 @@ public class CaptchaPlayer {
         if (!Config.HIDE_PLAYERS) {
             return;
         }
-
         Bukkit.getOnlinePlayers().forEach(player -> this.player.hidePlayer(mapcha, player));
         Bukkit.getOnlinePlayers().forEach(player -> player.hidePlayer(mapcha, this.player));
     }
@@ -250,7 +249,6 @@ public class CaptchaPlayer {
         if (!Config.HIDE_PLAYERS) {
             return;
         }
-
         Bukkit.getOnlinePlayers().forEach(player -> this.player.showPlayer(mapcha, player));
         Bukkit.getOnlinePlayers().forEach(player -> player.showPlayer(mapcha, this.player));
     }

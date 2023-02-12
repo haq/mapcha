@@ -93,5 +93,4 @@ public class JoinAndQuitHandler implements Listener {
         }
         return random.toString();
     }
-
 }

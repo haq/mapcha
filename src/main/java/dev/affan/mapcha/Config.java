@@ -22,6 +22,9 @@ public class Config {
     @ConfigValue("commands")
     public static List<String> ALLOWED_COMMANDS = Arrays.asList("/register", "/login");
 
+    @ConfigValue("server_success")
+    public static String SERVER_SUCCESS = "";
+
     @ConfigValue("captcha.hide_players")
     public static boolean HIDE_PLAYERS = true;
 
@@ -36,9 +39,6 @@ public class Config {
 
     @ConfigValue("captcha.time")
     public static int TIME_LIMIT = 30;
-
-    @ConfigValue("server.name")
-    public static String SUCCESS_SERVER = "";
 
     @ConfigValue("messages.success")
     public static String MESSAGE_SUCCESS = "Captcha " + GREEN + "solved!";
