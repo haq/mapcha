@@ -1,7 +1,7 @@
 package me.affanhaq.mapcha;
 
-import me.affanhaq.keeper.data.ConfigFile;
-import me.affanhaq.keeper.data.ConfigValue;
+import dev.affan.keeper.data.ConfigFile;
+import dev.affan.keeper.data.ConfigValue;
 
 import java.util.Arrays;
 import java.util.List;

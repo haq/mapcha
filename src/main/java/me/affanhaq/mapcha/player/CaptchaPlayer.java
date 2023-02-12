@@ -3,7 +3,6 @@ package me.affanhaq.mapcha.player;
 import me.affanhaq.mapcha.Config;
 import me.affanhaq.mapcha.Mapcha;
 import me.affanhaq.mapcha.tasks.KickPlayerTask;
-import org.apache.commons.lang.math.RandomUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -22,7 +21,6 @@ public class CaptchaPlayer {
     private final ItemStack[] armour;
     private int tries;
     private final long lastTime;
-    private final long seed;
 
     private final int kickPlayerTask;
 
@@ -36,7 +34,6 @@ public class CaptchaPlayer {
 
         tries = 0;
         lastTime = System.currentTimeMillis();
-        seed = RandomUtils.nextInt();
 
         // starting a timer to kick the player if the captcha has not been finished
         kickPlayerTask = Bukkit.getScheduler().scheduleSyncDelayedTask(
@@ -83,7 +80,7 @@ public class CaptchaPlayer {
         g.setColor(foreground);
         g.drawString(captcha, (int) ((image.getWidth() - g.getFontMetrics().getStringBounds(captcha, g).getWidth()) / 2), 105);
 
-        Random random = new Random(seed);
+        Random random = new Random();
         if (Config.POINTS) {
             for (int i = 0; i < 100; i++) {
                 int x = random.nextInt(image.getWidth());

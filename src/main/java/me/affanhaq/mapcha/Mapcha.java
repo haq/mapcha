@@ -1,6 +1,6 @@
 package me.affanhaq.mapcha;
 
-import me.affanhaq.keeper.Keeper;
+import dev.affan.keeper.Keeper;
 import me.affanhaq.mapcha.handlers.CaptchaHandler;
 import me.affanhaq.mapcha.handlers.MapHandler;
 import me.affanhaq.mapcha.handlers.PlayerHandler;
