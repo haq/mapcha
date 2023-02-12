@@ -1,16 +1,14 @@
 package dev.affan.mapcha.handlers;
 
+import dev.affan.mapcha.Config;
 import dev.affan.mapcha.Mapcha;
 import dev.affan.mapcha.events.CaptchaFailureEvent;
 import dev.affan.mapcha.events.CaptchaSuccessEvent;
 import dev.affan.mapcha.player.CaptchaPlayer;
 import dev.affan.mapcha.tasks.KickPlayerTask;
 import dev.affan.mapcha.tasks.SendPlayerToServerTask;
-import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-
-import static dev.affan.mapcha.Config.*;
 
 public class CaptchaHandler implements Listener {
 
@@ -25,25 +23,24 @@ public class CaptchaHandler implements Listener {
         CaptchaPlayer player = event.getPlayer();
 
         // send success message to player
-        player.getPlayer().sendMessage(PREFIX + " " + MESSAGE_SUCCESS);
+        player.getPlayer().sendMessage(Config.PREFIX + " " + Config.MESSAGE_SUCCESS);
 
         // give the players items back
         player.rollbackInventory();
 
-        // added the user to the completed cache
-        if (USE_CACHE) {
-            mapcha.getCacheManager().add(player.getPlayer());
-        }
+        // add the user to the completed cache
+        mapcha.getCacheManager().add(player.getPlayer());
 
         // cancel kick task
         player.cancelKickTask();
 
+        // remove the player from the captcha system
         mapcha.getPlayerManager().remove(player);
-        Bukkit.getScheduler().scheduleSyncDelayedTask(
-                mapcha,
-                new SendPlayerToServerTask(mapcha, player.getPlayer()),
-                SendPlayerToServerTask.delay()
-        );
+
+        // schedule task to send player to specified server
+        new SendPlayerToServerTask(
+                mapcha, player.getPlayer()
+        ).runTaskLater(mapcha, SendPlayerToServerTask.delay());
     }
 
     @EventHandler
@@ -51,13 +48,13 @@ public class CaptchaHandler implements Listener {
         CaptchaPlayer player = event.getPlayer();
 
         // kick the player because he's out of tries
-        if (player.getTries() >= (TRIES - 1)) {
+        if (player.getTries() >= (Config.TRIES - 1)) {
 
             // cancel kick task
             player.cancelKickTask();
 
             // kick the player
-            Bukkit.getScheduler().runTask(mapcha, new KickPlayerTask(player.getPlayer()));
+            new KickPlayerTask(player.getPlayer()).runTask(mapcha);
 
         } else {
 
@@ -66,7 +63,7 @@ public class CaptchaHandler implements Listener {
 
             // notify the player of how many tries they have left
             player.getPlayer().sendMessage(
-                    PREFIX + " " + MESSAGE_RETRY.replace("{CURRENT}", String.valueOf(player.getTries())).replace("{MAX}", String.valueOf(TRIES))
+                    Config.PREFIX + " " + Config.MESSAGE_RETRY.replace("{CURRENT}", String.valueOf(player.getTries())).replace("{MAX}", String.valueOf(Config.TRIES))
             );
         }
     }

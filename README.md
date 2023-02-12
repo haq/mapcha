@@ -1,9 +1,9 @@
 [![license](https://img.shields.io/github/license/mashape/apistatus.svg)](LICENSE)
 
 # mapcha
-A simple captcha plugin, which uses maps as the captcha.
+Map based captcha plugin for your Minecraft server.
 
-### Description
+### description
 - On player join, the player's inventory is cleared, and they are given an empty map. 
 - On right-click, the captcha will show.
 - From there the player will have a fixed amount of time to complete the captcha. 
@@ -11,15 +11,15 @@ A simple captcha plugin, which uses maps as the captcha.
 - Once the time has reached or the tries limit has been reached the player is kicked. 
 - If the captcha is completed the player's items are returned to them.
 
-### Screenshot
+### screenshot
 ![screenshot](https://user-images.githubusercontent.com/26406334/141121824-4834f3f2-bdbd-4390-b175-5d50c6119f76.png)
 ![screenshot](https://user-images.githubusercontent.com/26406334/141121799-10fc1365-650a-4506-8189-c6abe7f50605.png)
 
-### Permissions
+### permissions
 * mapcha.bypass
     * Allows the player to bypass the captcha.
 
-### Default config
+### default config
 ```yaml
 # Title shown on the map
 title: 'Captcha'
@@ -44,9 +44,6 @@ captcha:
 
 # Send the player to a connected server after captcha completion.
 server:
-  enabled: false
-
-  # The server name.
   name: ''
 
 messages:
@@ -60,7 +57,6 @@ messages:
   fail: Captcha &cfailed!
 
 styles:
-
   # Use black(white) background, white(black) foreground.
   invert_color: false
   

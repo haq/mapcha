@@ -2,8 +2,9 @@ package dev.affan.mapcha.tasks;
 
 import dev.affan.mapcha.Config;
 import org.bukkit.entity.Player;
+import org.bukkit.scheduler.BukkitRunnable;
 
-public class KickPlayerTask implements Runnable {
+public class KickPlayerTask extends BukkitRunnable {
 
     private final Player player;
 

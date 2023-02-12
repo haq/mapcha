@@ -3,9 +3,9 @@ package dev.affan.mapcha.player;
 import dev.affan.mapcha.Mapcha;
 import dev.affan.mapcha.Config;
 import dev.affan.mapcha.tasks.KickPlayerTask;
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.scheduler.BukkitTask;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -22,9 +22,12 @@ public class CaptchaPlayer {
     private int tries;
     private final long lastTime;
 
-    private final int kickPlayerTask;
+    private final BukkitTask kickPlayerTask;
 
-    public CaptchaPlayer(Player player, String captcha, Mapcha mapcha) {
+    private final BufferedImage image;
+    private final Graphics graphics;
+
+    public CaptchaPlayer(Mapcha mapcha, Player player, String captcha) {
         this.player = player;
         this.captcha = captcha;
 
@@ -36,11 +39,11 @@ public class CaptchaPlayer {
         lastTime = System.currentTimeMillis();
 
         // starting a timer to kick the player if the captcha has not been finished
-        kickPlayerTask = Bukkit.getScheduler().scheduleSyncDelayedTask(
-                mapcha,
-                new KickPlayerTask(player),
-                KickPlayerTask.delay()
-        );
+        kickPlayerTask = new KickPlayerTask(player).runTaskLater(mapcha, KickPlayerTask.delay());
+
+        // create image to be drawn
+        image = new BufferedImage(128, 128, BufferedImage.TYPE_INT_RGB);
+        graphics = image.getGraphics();
     }
 
     /**
@@ -52,63 +55,159 @@ public class CaptchaPlayer {
         Color background = Config.INVERT_COLOR ? Color.WHITE : Color.BLACK;
         Color foreground = Config.INVERT_COLOR ? Color.BLACK : Color.WHITE;
 
-        BufferedImage image = new BufferedImage(128, 128, BufferedImage.TYPE_INT_RGB);
-        Graphics g = image.getGraphics();
-        g.setColor(background);
-        g.fillRect(0, 0, image.getWidth(), image.getHeight());
+        // set background color
+        graphics.setColor(background);
 
-        String title = Config.TITLE;
-        g.setColor(foreground);
-        g.setFont(new Font("Arial", Font.BOLD, 30));
-        g.drawString(title, (int) ((image.getWidth() - g.getFontMetrics().getStringBounds(title, g).getWidth()) / 2), 30);
+        // draw the background
+        graphics.fillRect(0, 0, image.getWidth(), image.getHeight());
 
-        g.setFont(new Font("Arial", Font.BOLD, 10));
+        //
+        drawTitle(foreground);
 
-        String sTries = "Tries Left: ";
-        g.setColor(foreground);
-        g.drawString(sTries, (int) ((image.getWidth() - g.getFontMetrics().getStringBounds(sTries, g).getWidth()) / 2), 45);
-        g.setColor((Config.TRIES - tries) == 1 ? Color.RED : Color.GREEN);
-        g.drawString(String.valueOf((Config.TRIES - tries)), (int) (((image.getWidth() - g.getFontMetrics().getStringBounds(sTries, g).getWidth()) / 2) + g.getFontMetrics().getStringBounds(sTries, g).getWidth() + 2), 45);
+        //
+        drawTries(foreground);
+        drawTime(foreground);
 
-        String sTime = "Time Left: ";
-        g.setColor(foreground);
-        g.drawString(sTime, (int) ((image.getWidth() - g.getFontMetrics().getStringBounds(sTime, g).getWidth()) / 2), 55);
-        g.setColor((Config.TIME_LIMIT * 1000L) - (System.currentTimeMillis() - lastTime) == 1000 ? Color.RED : Color.GREEN);
-        g.drawString(new SimpleDateFormat("ss").format((Config.TIME_LIMIT * 1000L) - (System.currentTimeMillis() - lastTime)) + " sec", (int) (((image.getWidth() - g.getFontMetrics().getStringBounds(sTime, g).getWidth()) / 2) + g.getFontMetrics().getStringBounds(sTime, g).getWidth() + 2), 55);
+        //
+        drawCaptcha(foreground);
 
-        g.setFont(new Font("Arial", Font.BOLD, 40));
-        g.setColor(foreground);
-        g.drawString(captcha, (int) ((image.getWidth() - g.getFontMetrics().getStringBounds(captcha, g).getWidth()) / 2), 105);
-
-        Random random = new Random();
-        if (Config.POINTS) {
-            for (int i = 0; i < 100; i++) {
-                int x = random.nextInt(image.getWidth());
-                int y = random.nextInt(image.getHeight() / 2) + image.getHeight() / 2;
-                g.drawOval(x, y, 1, 1);
-            }
-        }
-
-        if (Config.LINES) {
-            for (int i = 0; i < 10; i++) {
-                int x1 = random.nextInt(image.getWidth());
-                int y1 = random.nextInt(image.getHeight() / 2) + image.getHeight() / 2;
-                int x2 = random.nextInt(image.getWidth());
-                int y2 = random.nextInt(image.getHeight() / 2) + image.getHeight() / 2;
-                g.drawLine(x1 % image.getWidth(), y1, x2, y2);
-            }
-        }
+        //
+        drawPoints(foreground, new Random());
+        drawLines(foreground, new Random());
 
         return image;
     }
 
-    /**
-     * Gives the players items back.
-     */
-    public void rollbackInventory() {
-        player.getInventory().setContents(contents);
-        player.getInventory().setArmorContents(armour);
-        player.updateInventory();
+    private void drawTitle(Color color) {
+        String sTitle = Config.TITLE;
+
+        //
+        graphics.setFont(
+                new Font(Config.FONT, Font.BOLD, 30)
+        );
+
+        //
+        graphics.setColor(color);
+
+        //
+        graphics.drawString(
+                sTitle,
+                (int) ((image.getWidth() - graphics.getFontMetrics().getStringBounds(sTitle, graphics).getWidth()) / 2),
+                30
+        );
+    }
+
+    private void drawTries(Color color) {
+        String sTries = "Tries Left: ";
+
+        graphics.setFont(
+                new Font(Config.FONT, Font.BOLD, 10)
+        );
+
+        //
+        graphics.setColor(color);
+
+        //
+        graphics.drawString(
+                sTries,
+                (int) ((image.getWidth() - graphics.getFontMetrics().getStringBounds(sTries, graphics).getWidth()) / 2),
+                45
+        );
+
+        // set the color depending on how many tries are left
+        graphics.setColor(
+                (Config.TRIES - tries) == 1 ? Color.RED : Color.GREEN
+        );
+
+        // draw the amount of tries left
+        graphics.drawString(
+                String.valueOf((Config.TRIES - tries)),
+                (int) (((image.getWidth() - graphics.getFontMetrics().getStringBounds(sTries, graphics).getWidth()) / 2) + graphics.getFontMetrics().getStringBounds(sTries, graphics).getWidth() + 2),
+                45
+        );
+    }
+
+    private void drawTime(Color color) {
+        String sTime = "Time Left: ";
+
+        graphics.setFont(
+                new Font(Config.FONT, Font.BOLD, 10)
+        );
+
+        //
+        graphics.setColor(color);
+
+        //
+        graphics.drawString(
+                sTime,
+                (int) ((image.getWidth() - graphics.getFontMetrics().getStringBounds(sTime, graphics).getWidth()) / 2),
+                55
+        );
+
+        //
+        graphics.setColor(
+                (Config.TIME_LIMIT * 1000L) - (System.currentTimeMillis() - lastTime) == 1000 ? Color.RED : Color.GREEN
+        );
+
+        //
+        graphics.drawString(
+                new SimpleDateFormat("ss").format((Config.TIME_LIMIT * 1000L) - (System.currentTimeMillis() - lastTime)) + " sec",
+                (int) (((image.getWidth() - graphics.getFontMetrics().getStringBounds(sTime, graphics).getWidth()) / 2) + graphics.getFontMetrics().getStringBounds(sTime, graphics).getWidth() + 2),
+                55
+        );
+    }
+
+    private void drawCaptcha(Color color) {
+        // set captcha font
+        graphics.setFont(
+                new Font(Config.FONT, Font.BOLD, 40)
+        );
+
+        // set captcha font color
+        graphics.setColor(color);
+
+        // draw captcha
+        graphics.drawString(
+                captcha,
+                (int) ((image.getWidth() - graphics.getFontMetrics().getStringBounds(captcha, graphics).getWidth()) / 2),
+                105
+        );
+    }
+
+    private void drawPoints(Color color, Random random) {
+        if (!Config.POINTS) {
+            return;
+        }
+
+        // set the color for the points
+        graphics.setColor(color);
+
+        for (int i = 0; i < 100; i++) {
+            graphics.drawOval(
+                    random.nextInt(image.getWidth()),
+                    random.nextInt(image.getHeight() / 2) + image.getHeight() / 2,
+                    1,
+                    1
+            );
+        }
+    }
+
+    private void drawLines(Color color, Random random) {
+        if (!Config.LINES) {
+            return;
+        }
+
+        // set the color for the lines
+        graphics.setColor(color);
+
+        for (int i = 0; i < 10; i++) {
+            graphics.drawLine(
+                    random.nextInt(image.getWidth()) % image.getWidth(),
+                    random.nextInt(image.getHeight() / 2) + image.getHeight() / 2,
+                    random.nextInt(image.getWidth()),
+                    random.nextInt(image.getHeight() / 2) + image.getHeight() / 2
+            );
+        }
     }
 
     /**
@@ -121,8 +220,17 @@ public class CaptchaPlayer {
         return this;
     }
 
+    /**
+     * Gives the players items back.
+     */
+    public void rollbackInventory() {
+        player.getInventory().setContents(contents);
+        player.getInventory().setArmorContents(armour);
+        player.updateInventory();
+    }
+
     public void cancelKickTask() {
-        Bukkit.getScheduler().cancelTask(kickPlayerTask);
+        kickPlayerTask.cancel();
     }
 
     public String getCaptcha() {
@@ -138,6 +246,6 @@ public class CaptchaPlayer {
     }
 
     public void incrementTries() {
-        this.tries++;
+        tries++;
     }
 }

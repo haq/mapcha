@@ -1,5 +1,6 @@
 package dev.affan.mapcha.managers;
 
+import dev.affan.mapcha.Config;
 import org.bukkit.entity.Player;
 
 import java.util.HashSet;
@@ -11,11 +12,13 @@ public class CacheManager {
     private final Set<UUID> cache = new HashSet<>();
 
     public void add(Player player) {
+        if (!Config.USE_CACHE) {
+            return;
+        }
         cache.add(player.getUniqueId());
     }
 
     public boolean isCached(Player player) {
-        return cache.contains(player.getUniqueId());
+        return Config.USE_CACHE && cache.contains(player.getUniqueId());
     }
-
 }

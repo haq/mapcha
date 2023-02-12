@@ -22,6 +22,9 @@ public class Config {
     @ConfigValue("commands")
     public static List<String> ALLOWED_COMMANDS = Arrays.asList("/register", "/login");
 
+    @ConfigValue("captcha.font")
+    public static String FONT = "Arial";
+
     @ConfigValue("captcha.cache")
     public static boolean USE_CACHE = true;
 
@@ -30,9 +33,6 @@ public class Config {
 
     @ConfigValue("captcha.time")
     public static int TIME_LIMIT = 30;
-
-    @ConfigValue("server.enabled")
-    public static boolean SEND_TO_SERVER = false;
 
     @ConfigValue("server.name")
     public static String SUCCESS_SERVER = "";

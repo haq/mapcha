@@ -1,5 +1,6 @@
 package dev.affan.mapcha.handlers;
 
+import dev.affan.mapcha.Config;
 import dev.affan.mapcha.Mapcha;
 import dev.affan.mapcha.player.CaptchaPlayer;
 import dev.affan.mapcha.events.CaptchaFailureEvent;
@@ -17,11 +18,10 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.checkerframework.checker.units.qual.C;
 
 import java.util.Collections;
 import java.util.Random;
-
-import static dev.affan.mapcha.Config.*;
 
 public class PlayerHandler implements Listener {
 
@@ -38,32 +38,21 @@ public class PlayerHandler implements Listener {
 
         // checking if player has permission to bypass the captcha or player has already completed the captcha before
         // by default OPs have the '*' permission so this method will return true
-        if (player.hasPermission(BYPASS_PERMISSION) || (USE_CACHE && mapcha.getCacheManager().isCached(player))) {
-            Bukkit.getScheduler().scheduleSyncDelayedTask(
-                    mapcha,
-                    new SendPlayerToServerTask(mapcha, player),
-                    SendPlayerToServerTask.delay()
-            );
+        if (player.hasPermission(Config.BYPASS_PERMISSION) || mapcha.getCacheManager().isCached(player)) {
+            new SendPlayerToServerTask(mapcha, player).runTaskLater(mapcha, SendPlayerToServerTask.delay());
             return;
         }
 
         // creating a captcha player
         CaptchaPlayer captchaPlayer = new CaptchaPlayer(
-                player,
-                genCaptcha(),
-                mapcha
+                mapcha, player, genCaptcha()
         ).cleanPlayer();
 
-        // getting the map itemstack depending ont he spigot version
-        String version = Bukkit.getVersion();
+        // getting the map itemstack depending on the spigot version
         ItemStack itemStack;
-        if (version.contains("1.13") ||
-                version.contains("1.14") ||
-                version.contains("1.15") ||
-                version.contains("1.16") ||
-                version.contains("1.17")) {
+        try {
             itemStack = new ItemStack(Material.valueOf("LEGACY_EMPTY_MAP"));
-        } else {
+        } catch (IllegalArgumentException e) {
             itemStack = new ItemStack(Material.valueOf("EMPTY_MAP"));
         }
 
@@ -81,7 +70,9 @@ public class PlayerHandler implements Listener {
     @EventHandler(priority = EventPriority.HIGH)
     public void onQuit(PlayerQuitEvent event) {
 
-        CaptchaPlayer player = mapcha.getPlayerManager().getPlayer(event.getPlayer());
+        CaptchaPlayer player = mapcha.getPlayerManager().getPlayer(
+                event.getPlayer()
+        );
 
         if (player == null) {
             return;
@@ -116,9 +107,7 @@ public class PlayerHandler implements Listener {
 
     @EventHandler
     public void onCommand(PlayerCommandPreprocessEvent event) {
-        event.setCancelled(
-                mapcha.getPlayerManager().getPlayer(event.getPlayer()) != null && !validCommand(event.getMessage())
-        );
+        event.setCancelled(mapcha.getPlayerManager().getPlayer(event.getPlayer()) != null && !validCommand(event.getMessage()));
     }
 
     /**
@@ -127,8 +116,8 @@ public class PlayerHandler implements Listener {
      * @param message the message to check commands for
      * @return whether the message contains a command or not
      */
-    private boolean validCommand(String message) {
-        for (String command : ALLOWED_COMMANDS) {
+    private static boolean validCommand(String message) {
+        for (String command : Config.ALLOWED_COMMANDS) {
             if (message.contains(command)) {
                 return true;
             }
@@ -139,7 +128,7 @@ public class PlayerHandler implements Listener {
     /**
      * @return a random string with len 4
      */
-    private String genCaptcha() {
+    private static String genCaptcha() {
         String charset = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
         StringBuilder random = new StringBuilder();
         for (int i = 0; i < 4; i++) {

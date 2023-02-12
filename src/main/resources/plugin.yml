@@ -1,7 +1,9 @@
+api-version: 1.16
+
 name: Mapcha
 version: 2.2
 main: dev.affan.mapcha.Mapcha
-description: A simple captcha plugin, which uses maps as the captcha.
+description: Map based captcha plugin for your Minecraft server.
 
 permissions:
   mapcha.bypass:
