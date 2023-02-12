@@ -3,31 +3,25 @@ package dev.affan.mapcha.handlers;
 import dev.affan.mapcha.Config;
 import dev.affan.mapcha.Mapcha;
 import dev.affan.mapcha.player.CaptchaPlayer;
-import dev.affan.mapcha.events.CaptchaFailureEvent;
-import dev.affan.mapcha.events.CaptchaSuccessEvent;
 import dev.affan.mapcha.tasks.SendPlayerToServerTask;
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.AsyncPlayerChatEvent;
-import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.checkerframework.checker.units.qual.C;
 
 import java.util.Collections;
 import java.util.Random;
 
-public class PlayerHandler implements Listener {
+public class JoinAndQuitHandler implements Listener {
 
     private final Mapcha mapcha;
 
-    public PlayerHandler(Mapcha mapcha) {
+    public JoinAndQuitHandler(Mapcha mapcha) {
         this.mapcha = mapcha;
     }
 
@@ -46,7 +40,7 @@ public class PlayerHandler implements Listener {
         // creating a captcha player
         CaptchaPlayer captchaPlayer = new CaptchaPlayer(
                 mapcha, player, genCaptcha()
-        ).cleanPlayer();
+        );
 
         // getting the map itemstack depending on the spigot version
         ItemStack itemStack;
@@ -81,48 +75,11 @@ public class PlayerHandler implements Listener {
         // giving the player their items back
         player.rollbackInventory();
 
+        // show hidden players
+        player.showPlayers();
+
         // removing the player from the captcha list
         mapcha.getPlayerManager().remove(player);
-    }
-
-    @EventHandler
-    public void onPlayerChatEvent(AsyncPlayerChatEvent event) {
-
-        // checking if the player is filling the captcha
-        CaptchaPlayer player = mapcha.getPlayerManager().getPlayer(event.getPlayer());
-
-        if (player == null) {
-            return;
-        }
-
-        // captcha success
-        if (event.getMessage().equals(player.getCaptcha())) {
-            Bukkit.getScheduler().runTask(mapcha, () -> Bukkit.getPluginManager().callEvent(new CaptchaSuccessEvent(player)));
-        } else {
-            Bukkit.getScheduler().runTask(mapcha, () -> Bukkit.getPluginManager().callEvent(new CaptchaFailureEvent(player)));
-        }
-
-        event.setCancelled(true);
-    }
-
-    @EventHandler
-    public void onCommand(PlayerCommandPreprocessEvent event) {
-        event.setCancelled(mapcha.getPlayerManager().getPlayer(event.getPlayer()) != null && !validCommand(event.getMessage()));
-    }
-
-    /**
-     * Checks if the message contains a command.
-     *
-     * @param message the message to check commands for
-     * @return whether the message contains a command or not
-     */
-    private static boolean validCommand(String message) {
-        for (String command : Config.ALLOWED_COMMANDS) {
-            if (message.contains(command)) {
-                return true;
-            }
-        }
-        return false;
     }
 
     /**

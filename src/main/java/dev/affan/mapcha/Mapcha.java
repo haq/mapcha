@@ -1,9 +1,7 @@
 package dev.affan.mapcha;
 
 import dev.affan.keeper.Keeper;
-import dev.affan.mapcha.handlers.CaptchaHandler;
-import dev.affan.mapcha.handlers.MapHandler;
-import dev.affan.mapcha.handlers.PlayerHandler;
+import dev.affan.mapcha.handlers.*;
 import dev.affan.mapcha.managers.CacheManager;
 import dev.affan.mapcha.managers.CaptchaPlayerManager;
 import org.bukkit.Bukkit;
@@ -23,9 +21,11 @@ public class Mapcha extends JavaPlugin {
 
         // registering events
         PluginManager pluginManager = Bukkit.getPluginManager();
-        pluginManager.registerEvents(new PlayerHandler(this), this);
-        pluginManager.registerEvents(new MapHandler(this), this);
         pluginManager.registerEvents(new CaptchaHandler(this), this);
+        pluginManager.registerEvents(new ChatHandler(this), this);
+        pluginManager.registerEvents(new CommandHandler(this), this);
+        pluginManager.registerEvents(new JoinAndQuitHandler(this), this);
+        pluginManager.registerEvents(new MapHandler(this), this);
 
         getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
     }

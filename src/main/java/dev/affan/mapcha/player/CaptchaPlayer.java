@@ -1,8 +1,9 @@
 package dev.affan.mapcha.player;
 
-import dev.affan.mapcha.Mapcha;
 import dev.affan.mapcha.Config;
+import dev.affan.mapcha.Mapcha;
 import dev.affan.mapcha.tasks.KickPlayerTask;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitTask;
@@ -14,6 +15,7 @@ import java.util.Random;
 
 public class CaptchaPlayer {
 
+    private final Mapcha mapcha;
     private final Player player;
     private final String captcha;
 
@@ -28,6 +30,7 @@ public class CaptchaPlayer {
     private final Graphics graphics;
 
     public CaptchaPlayer(Mapcha mapcha, Player player, String captcha) {
+        this.mapcha = mapcha;
         this.player = player;
         this.captcha = captcha;
 
@@ -44,6 +47,12 @@ public class CaptchaPlayer {
         // create image to be drawn
         image = new BufferedImage(128, 128, BufferedImage.TYPE_INT_RGB);
         graphics = image.getGraphics();
+
+        // clean the player
+        cleanPlayer();
+
+        // hide other players
+        hidePlayers();
     }
 
     /**
@@ -213,11 +222,10 @@ public class CaptchaPlayer {
     /**
      * Clean the players inventory.
      */
-    public CaptchaPlayer cleanPlayer() {
+    public void cleanPlayer() {
         player.getInventory().clear();
         player.getInventory().setArmorContents(null);
         player.updateInventory();
-        return this;
     }
 
     /**
@@ -227,6 +235,24 @@ public class CaptchaPlayer {
         player.getInventory().setContents(contents);
         player.getInventory().setArmorContents(armour);
         player.updateInventory();
+    }
+
+    public void hidePlayers() {
+        if (!Config.HIDE_PLAYERS) {
+            return;
+        }
+
+        Bukkit.getOnlinePlayers().forEach(player -> this.player.hidePlayer(mapcha, player));
+        Bukkit.getOnlinePlayers().forEach(player -> player.hidePlayer(mapcha, this.player));
+    }
+
+    public void showPlayers() {
+        if (!Config.HIDE_PLAYERS) {
+            return;
+        }
+
+        Bukkit.getOnlinePlayers().forEach(player -> this.player.showPlayer(mapcha, player));
+        Bukkit.getOnlinePlayers().forEach(player -> player.showPlayer(mapcha, this.player));
     }
 
     public void cancelKickTask() {

@@ -22,11 +22,14 @@ public class Config {
     @ConfigValue("commands")
     public static List<String> ALLOWED_COMMANDS = Arrays.asList("/register", "/login");
 
-    @ConfigValue("captcha.font")
-    public static String FONT = "Arial";
+    @ConfigValue("captcha.hide_players")
+    public static boolean HIDE_PLAYERS = true;
 
     @ConfigValue("captcha.cache")
     public static boolean USE_CACHE = true;
+
+    @ConfigValue("captcha.font")
+    public static String FONT = "Arial";
 
     @ConfigValue("captcha.tries")
     public static int TRIES = 3;
