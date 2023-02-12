@@ -1,4 +1,4 @@
-package me.affanhaq.mapcha;
+package dev.affan.mapcha;
 
 import dev.affan.keeper.data.ConfigFile;
 import dev.affan.keeper.data.ConfigValue;

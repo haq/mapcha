@@ -1,8 +1,8 @@
-package me.affanhaq.mapcha.player;
+package dev.affan.mapcha.player;
 
-import me.affanhaq.mapcha.Config;
-import me.affanhaq.mapcha.Mapcha;
-import me.affanhaq.mapcha.tasks.KickPlayerTask;
+import dev.affan.mapcha.Mapcha;
+import dev.affan.mapcha.Config;
+import dev.affan.mapcha.tasks.KickPlayerTask;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;

@@ -1,15 +1,15 @@
-package me.affanhaq.mapcha.events;
+package dev.affan.mapcha.events;
 
-import me.affanhaq.mapcha.player.CaptchaPlayer;
+import dev.affan.mapcha.player.CaptchaPlayer;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 import org.jetbrains.annotations.NotNull;
 
-public class CaptchaFailureEvent extends Event {
+public class CaptchaSuccessEvent extends Event {
     private static final HandlerList HANDLERS = new HandlerList();
     private final CaptchaPlayer player;
 
-    public CaptchaFailureEvent(CaptchaPlayer player) {
+    public CaptchaSuccessEvent(CaptchaPlayer player) {
         this.player = player;
     }
 

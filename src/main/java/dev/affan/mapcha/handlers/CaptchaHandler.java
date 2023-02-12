@@ -1,16 +1,16 @@
-package me.affanhaq.mapcha.handlers;
+package dev.affan.mapcha.handlers;
 
-import me.affanhaq.mapcha.Mapcha;
-import me.affanhaq.mapcha.events.CaptchaFailureEvent;
-import me.affanhaq.mapcha.events.CaptchaSuccessEvent;
-import me.affanhaq.mapcha.player.CaptchaPlayer;
-import me.affanhaq.mapcha.tasks.KickPlayerTask;
-import me.affanhaq.mapcha.tasks.SendPlayerToServerTask;
+import dev.affan.mapcha.Mapcha;
+import dev.affan.mapcha.events.CaptchaFailureEvent;
+import dev.affan.mapcha.events.CaptchaSuccessEvent;
+import dev.affan.mapcha.player.CaptchaPlayer;
+import dev.affan.mapcha.tasks.KickPlayerTask;
+import dev.affan.mapcha.tasks.SendPlayerToServerTask;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 
-import static me.affanhaq.mapcha.Config.*;
+import static dev.affan.mapcha.Config.*;
 
 public class CaptchaHandler implements Listener {
 

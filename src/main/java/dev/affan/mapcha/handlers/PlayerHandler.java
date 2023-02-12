@@ -1,10 +1,10 @@
-package me.affanhaq.mapcha.handlers;
+package dev.affan.mapcha.handlers;
 
-import me.affanhaq.mapcha.Mapcha;
-import me.affanhaq.mapcha.events.CaptchaFailureEvent;
-import me.affanhaq.mapcha.events.CaptchaSuccessEvent;
-import me.affanhaq.mapcha.player.CaptchaPlayer;
-import me.affanhaq.mapcha.tasks.SendPlayerToServerTask;
+import dev.affan.mapcha.Mapcha;
+import dev.affan.mapcha.player.CaptchaPlayer;
+import dev.affan.mapcha.events.CaptchaFailureEvent;
+import dev.affan.mapcha.events.CaptchaSuccessEvent;
+import dev.affan.mapcha.tasks.SendPlayerToServerTask;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -21,7 +21,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import java.util.Collections;
 import java.util.Random;
 
-import static me.affanhaq.mapcha.Config.*;
+import static dev.affan.mapcha.Config.*;
 
 public class PlayerHandler implements Listener {
 

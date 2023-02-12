@@ -1,4 +1,4 @@
-package me.affanhaq.mapcha.managers;
+package dev.affan.mapcha.managers;
 
 import org.bukkit.entity.Player;
 

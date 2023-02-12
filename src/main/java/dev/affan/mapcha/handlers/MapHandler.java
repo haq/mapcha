@@ -1,7 +1,7 @@
-package me.affanhaq.mapcha.handlers;
+package dev.affan.mapcha.handlers;
 
-import me.affanhaq.mapcha.Mapcha;
-import me.affanhaq.mapcha.player.CaptchaPlayer;
+import dev.affan.mapcha.Mapcha;
+import dev.affan.mapcha.player.CaptchaPlayer;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;

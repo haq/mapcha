@@ -1,12 +1,12 @@
-package me.affanhaq.mapcha.tasks;
+package dev.affan.mapcha.tasks;
 
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
-import me.affanhaq.mapcha.Mapcha;
+import dev.affan.mapcha.Mapcha;
 import org.bukkit.entity.Player;
 
-import static me.affanhaq.mapcha.Config.SEND_TO_SERVER;
-import static me.affanhaq.mapcha.Config.SUCCESS_SERVER;
+import static dev.affan.mapcha.Config.SEND_TO_SERVER;
+import static dev.affan.mapcha.Config.SUCCESS_SERVER;
 
 public class SendPlayerToServerTask implements Runnable {
 

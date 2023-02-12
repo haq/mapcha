@@ -1,6 +1,6 @@
-package me.affanhaq.mapcha.tasks;
+package dev.affan.mapcha.tasks;
 
-import me.affanhaq.mapcha.Config;
+import dev.affan.mapcha.Config;
 import org.bukkit.entity.Player;
 
 public class KickPlayerTask implements Runnable {

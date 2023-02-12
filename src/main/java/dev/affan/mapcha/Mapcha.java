@@ -1,11 +1,11 @@
-package me.affanhaq.mapcha;
+package dev.affan.mapcha;
 
 import dev.affan.keeper.Keeper;
-import me.affanhaq.mapcha.handlers.CaptchaHandler;
-import me.affanhaq.mapcha.handlers.MapHandler;
-import me.affanhaq.mapcha.handlers.PlayerHandler;
-import me.affanhaq.mapcha.managers.CacheManager;
-import me.affanhaq.mapcha.managers.CaptchaPlayerManager;
+import dev.affan.mapcha.handlers.CaptchaHandler;
+import dev.affan.mapcha.handlers.MapHandler;
+import dev.affan.mapcha.handlers.PlayerHandler;
+import dev.affan.mapcha.managers.CacheManager;
+import dev.affan.mapcha.managers.CaptchaPlayerManager;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;

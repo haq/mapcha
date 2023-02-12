@@ -1,6 +1,6 @@
 name: Mapcha
-version: 2.1
-main: me.affanhaq.mapcha.Mapcha
+version: 2.2
+main: dev.affan.mapcha.Mapcha
 description: A simple captcha plugin, which uses maps as the captcha.
 
 permissions:

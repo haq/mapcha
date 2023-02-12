@@ -1,6 +1,6 @@
-package me.affanhaq.mapcha.managers;
+package dev.affan.mapcha.managers;
 
-import me.affanhaq.mapcha.player.CaptchaPlayer;
+import dev.affan.mapcha.player.CaptchaPlayer;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.Nullable;
 
