@@ -74,6 +74,9 @@ captcha:
 other:
   # What inventory slot to give the map in. (between 0-8)
   inventory_slot: 4
+
+  # Stop the player from breaking blocks before the captcha is complete.
+  break_blocks: false
   
   # Stop the player from dropping items before the captcha is complete.
   drop_items: false

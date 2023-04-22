@@ -21,6 +21,7 @@ public class Mapcha extends JavaPlugin {
 
         // registering events
         PluginManager pluginManager = Bukkit.getPluginManager();
+        pluginManager.registerEvents(new BlockBreakHandler(this), this);
         pluginManager.registerEvents(new CaptchaHandler(this), this);
         pluginManager.registerEvents(new ChatHandler(this), this);
         pluginManager.registerEvents(new CommandHandler(this), this);

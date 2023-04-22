@@ -55,6 +55,9 @@ public class Config {
     @ConfigValue("other.inventory_slot")
     public static int INVENTORY_SLOT = 4;
 
+    @ConfigValue("other.break_blocks")
+    public static boolean BREAK_BLOCKS = false;
+
     @ConfigValue("other.drop_items")
     public static boolean DROP_ITEMS = false;
 

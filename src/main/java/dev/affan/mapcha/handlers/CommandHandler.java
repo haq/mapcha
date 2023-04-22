@@ -17,7 +17,7 @@ public class CommandHandler implements Listener {
     @EventHandler
     public void onCommand(PlayerCommandPreprocessEvent event) {
         event.setCancelled(
-                mapcha.getPlayerManager().getPlayer(event.getPlayer()) != null && !validCommand(event.getMessage())
+                !validCommand(event.getMessage()) && mapcha.getPlayerManager().getPlayer(event.getPlayer()) != null
         );
     }
 
