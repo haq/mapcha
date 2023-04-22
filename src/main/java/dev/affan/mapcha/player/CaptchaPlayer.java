@@ -29,10 +29,10 @@ public class CaptchaPlayer {
     private final BufferedImage image;
     private final Graphics graphics;
 
-    public CaptchaPlayer(Mapcha mapcha, Player player, String captcha) {
+    public CaptchaPlayer(Mapcha mapcha, Player player) {
         this.mapcha = mapcha;
         this.player = player;
-        this.captcha = captcha;
+        this.captcha = generateCaptcha();
 
         // storing the players inventory & armor
         contents = player.getInventory().getContents();
@@ -271,5 +271,17 @@ public class CaptchaPlayer {
 
     public void incrementTries() {
         tries++;
+    }
+
+    /**
+     * @return a random string with len 4
+     */
+    private static String generateCaptcha() {
+        String charset = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        StringBuilder random = new StringBuilder();
+        for (int i = 0; i < 4; i++) {
+            random.append(charset.charAt(new Random().nextInt(charset.length() - 1)));
+        }
+        return random.toString();
     }
 }

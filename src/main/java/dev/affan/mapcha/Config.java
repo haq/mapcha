@@ -52,6 +52,9 @@ public class Config {
     @ConfigValue("captcha.lines")
     public static boolean LINES = true;
 
+    @ConfigValue("other.inventory_slot")
+    public static int INVENTORY_SLOT = 4;
+
     @ConfigValue("other.drop_items")
     public static boolean DROP_ITEMS = false;
 

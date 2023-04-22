@@ -72,13 +72,15 @@ captcha:
   lines: true
 
 other:
+  # What inventory slot to give the map in. (between 0-8)
+  inventory_slot: 4
   
-  # Stop the player from dropping items before the captcha is complete.  
+  # Stop the player from dropping items before the captcha is complete.
   drop_items: false
 
   # Hide other players when the player is completing the captcha.
   hide_players: true
 
-  # Allows the player to only complete the captcha once per server restart. 
+  # Allows the player to only complete the captcha once per server restart.
   cache: true
 ```

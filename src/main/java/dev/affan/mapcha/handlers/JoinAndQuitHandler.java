@@ -12,10 +12,10 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.Collections;
-import java.util.Random;
 
 public class JoinAndQuitHandler implements Listener {
 
@@ -39,7 +39,7 @@ public class JoinAndQuitHandler implements Listener {
 
         // creating a captcha player
         CaptchaPlayer captchaPlayer = new CaptchaPlayer(
-                mapcha, player, genCaptcha()
+                mapcha, player
         );
 
         // getting the map itemstack depending on the spigot version
@@ -56,8 +56,15 @@ public class JoinAndQuitHandler implements Listener {
         itemMeta.setLore(Collections.singletonList("Open the map to see the captcha."));
         itemStack.setItemMeta(itemMeta);
 
+        // determine the inventory slot
+        int slot = Math.max(0, Math.min(8, Config.INVENTORY_SLOT));
+
         // giving the player the map and adding them to the captcha array
-        captchaPlayer.getPlayer().getInventory().setItemInHand(itemStack);
+        PlayerInventory inventory = captchaPlayer.getPlayer().getInventory();
+        inventory.setItem(slot, itemStack);
+        inventory.setHeldItemSlot(slot);
+
+        // add the player to the captcha manager
         mapcha.getPlayerManager().add(captchaPlayer);
     }
 
@@ -80,17 +87,5 @@ public class JoinAndQuitHandler implements Listener {
 
         // removing the player from the captcha list
         mapcha.getPlayerManager().remove(player);
-    }
-
-    /**
-     * @return a random string with len 4
-     */
-    private static String genCaptcha() {
-        String charset = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-        StringBuilder random = new StringBuilder();
-        for (int i = 0; i < 4; i++) {
-            random.append(charset.charAt(new Random().nextInt(charset.length() - 1)));
-        }
-        return random.toString();
     }
 }
