@@ -85,6 +85,9 @@ public class JoinAndQuitHandler implements Listener {
         // show hidden players
         player.showPlayers();
 
+        // remove blindness
+        player.unblindPlayer();
+
         // removing the player from the captcha list
         mapcha.getPlayerManager().remove(player);
     }

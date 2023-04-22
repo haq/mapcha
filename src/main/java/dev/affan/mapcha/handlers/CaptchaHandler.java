@@ -25,14 +25,20 @@ public class CaptchaHandler implements Listener {
         // send success message to player
         player.getPlayer().sendMessage(Config.PREFIX + " " + Config.MESSAGE_SUCCESS);
 
+        // cancel kick task
+        player.cancelKickTask();
+
         // give the players items back
         player.rollbackInventory();
 
+        // show players
+        player.showPlayers();
+
+        // unblind player
+        player.unblindPlayer();
+
         // add the user to the completed cache
         mapcha.getCacheManager().add(player.getPlayer());
-
-        // cancel kick task
-        player.cancelKickTask();
 
         // remove the player from the captcha system
         mapcha.getPlayerManager().remove(player);

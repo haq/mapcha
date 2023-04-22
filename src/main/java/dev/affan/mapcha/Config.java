@@ -64,6 +64,9 @@ public class Config {
     @ConfigValue("other.hide_players")
     public static boolean HIDE_PLAYERS = true;
 
+    @ConfigValue("other.blind_player")
+    public static boolean BLIND_PLAYER = true;
+
     @ConfigValue("other.cache")
     public static boolean USE_CACHE = true;
 }

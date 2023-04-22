@@ -6,6 +6,8 @@ import dev.affan.mapcha.tasks.KickPlayerTask;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitTask;
 
 import java.awt.*;
@@ -53,6 +55,9 @@ public class CaptchaPlayer {
 
         // hide other players
         hidePlayers();
+
+        // blind the player
+        blindPlayer();
     }
 
     /**
@@ -252,6 +257,23 @@ public class CaptchaPlayer {
         Bukkit.getOnlinePlayers().forEach(player -> this.player.showPlayer(mapcha, player));
         Bukkit.getOnlinePlayers().forEach(player -> player.showPlayer(mapcha, this.player));
     }
+
+    public void blindPlayer() {
+        if (!Config.BLIND_PLAYER) {
+            return;
+        }
+        player.addPotionEffect(
+                new PotionEffect(PotionEffectType.BLINDNESS, (Config.TIME_LIMIT + 1) * 20, 0)
+        );
+    }
+
+    public void unblindPlayer() {
+        if (!Config.BLIND_PLAYER) {
+            return;
+        }
+        player.removePotionEffect(PotionEffectType.BLINDNESS);
+    }
+
 
     public void cancelKickTask() {
         kickPlayerTask.cancel();

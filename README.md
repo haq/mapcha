@@ -84,6 +84,9 @@ other:
   # Hide other players when the player is completing the captcha.
   hide_players: true
 
+  # Blind the player while they are completing the captcha.
+  blind_player: true
+
   # Allows the player to only complete the captcha once per server restart.
   cache: true
 ```
