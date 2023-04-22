@@ -25,21 +25,6 @@ public class Config {
     @ConfigValue("server_success")
     public static String SERVER_SUCCESS = "";
 
-    @ConfigValue("captcha.hide_players")
-    public static boolean HIDE_PLAYERS = true;
-
-    @ConfigValue("captcha.cache")
-    public static boolean USE_CACHE = true;
-
-    @ConfigValue("captcha.font")
-    public static String FONT = "Arial";
-
-    @ConfigValue("captcha.tries")
-    public static int TRIES = 3;
-
-    @ConfigValue("captcha.time")
-    public static int TIME_LIMIT = 30;
-
     @ConfigValue("messages.success")
     public static String MESSAGE_SUCCESS = "Captcha " + GREEN + "solved!";
 
@@ -49,13 +34,30 @@ public class Config {
     @ConfigValue("messages.fail")
     public static String MESSAGE_FAIL = "Captcha " + RED + "failed!";
 
-    @ConfigValue("styles.invert_color")
+    @ConfigValue("captcha.tries")
+    public static int TRIES = 3;
+
+    @ConfigValue("captcha.time")
+    public static int TIME_LIMIT = 30;
+
+    @ConfigValue("captcha.font")
+    public static String FONT = "Arial";
+
+    @ConfigValue("captcha.invert_color")
     public static boolean INVERT_COLOR = false;
 
-    @ConfigValue("styles.points")
+    @ConfigValue("captcha.points")
     public static boolean POINTS = true;
 
-    @ConfigValue("styles.lines")
+    @ConfigValue("captcha.lines")
     public static boolean LINES = true;
 
+    @ConfigValue("other.drop_items")
+    public static boolean DROP_ITEMS = false;
+
+    @ConfigValue("other.hide_players")
+    public static boolean HIDE_PLAYERS = true;
+
+    @ConfigValue("other.cache")
+    public static boolean USE_CACHE = true;
 }

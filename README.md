@@ -40,17 +40,8 @@ commands:
 # Send the player to a connected server after captcha completion.
 server_success: ''
 
-captcha:
-  # Allows the player to only complete the captcha once per server restart.
-  cache: true
-
-  # Amount of tries the player will get to solve the captcha.
-  tries: 3
-
-  # The time limit in seconds the player has to solve the captcha.
-  time: 30
-
 messages:
+  
   # The success message the player receives after they solve the captcha.
   success: Captcha &asolved!
 
@@ -60,7 +51,17 @@ messages:
   # The fail message the player receives after they fail the captcha.
   fail: Captcha &cfailed!
 
-styles:
+captcha:
+
+  # Amount of tries the player will get to solve the captcha.
+  tries: 3
+
+  # The time limit in seconds the player has to solve the captcha.
+  time: 30
+  
+  # The font that is used to render the captcha. (not recommended to change)
+  font: Arial
+
   # Use black(white) background, white(black) foreground.
   invert_color: false
 
@@ -69,4 +70,15 @@ styles:
 
   # Draw lines on the captcha image
   lines: true
+
+other:
+  
+  # Stop the player from dropping items before the captcha is complete.  
+  drop_items: false
+
+  # Hide other players when the player is completing the captcha.
+  hide_players: true
+
+  # Allows the player to only complete the captcha once per server restart. 
+  cache: true
 ```

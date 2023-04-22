@@ -24,6 +24,7 @@ public class Mapcha extends JavaPlugin {
         pluginManager.registerEvents(new CaptchaHandler(this), this);
         pluginManager.registerEvents(new ChatHandler(this), this);
         pluginManager.registerEvents(new CommandHandler(this), this);
+        pluginManager.registerEvents(new DropItemHandler(this), this);
         pluginManager.registerEvents(new JoinAndQuitHandler(this), this);
         pluginManager.registerEvents(new MapHandler(this), this);
 

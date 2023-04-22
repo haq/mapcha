@@ -1,7 +1,7 @@
 api-version: 1.16
 
 name: Mapcha
-version: 2.2
+version: 2.3
 main: dev.affan.mapcha.Mapcha
 description: Map based captcha plugin for your Minecraft server.
 
