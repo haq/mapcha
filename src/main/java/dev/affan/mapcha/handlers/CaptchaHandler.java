@@ -73,5 +73,4 @@ public class CaptchaHandler implements Listener {
             );
         }
     }
-
 }

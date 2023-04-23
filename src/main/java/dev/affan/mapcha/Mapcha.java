@@ -28,6 +28,7 @@ public class Mapcha extends JavaPlugin {
         pluginManager.registerEvents(new DropItemHandler(this), this);
         pluginManager.registerEvents(new JoinAndQuitHandler(this), this);
         pluginManager.registerEvents(new MapHandler(this), this);
+        pluginManager.registerEvents(new MoveHandler(this), this);
 
         getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
     }

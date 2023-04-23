@@ -67,6 +67,9 @@ public class Config {
     @ConfigValue("other.blind_player")
     public static boolean BLIND_PLAYER = true;
 
+    @ConfigValue("other.freeze_player")
+    public static boolean FREEZE_PLAYER = true;
+
     @ConfigValue("other.cache")
     public static boolean USE_CACHE = true;
 }

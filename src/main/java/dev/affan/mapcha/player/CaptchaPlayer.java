@@ -9,10 +9,16 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitTask;
+import org.bukkit.util.Vector;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.lang.reflect.Array;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
 
 public class CaptchaPlayer {
@@ -263,7 +269,7 @@ public class CaptchaPlayer {
             return;
         }
         player.addPotionEffect(
-                new PotionEffect(PotionEffectType.BLINDNESS, (Config.TIME_LIMIT + 1) * 20, 0)
+                new PotionEffect(PotionEffectType.BLINDNESS, -1, 0)
         );
     }
 
@@ -273,7 +279,6 @@ public class CaptchaPlayer {
         }
         player.removePotionEffect(PotionEffectType.BLINDNESS);
     }
-
 
     public void cancelKickTask() {
         kickPlayerTask.cancel();
@@ -295,9 +300,6 @@ public class CaptchaPlayer {
         tries++;
     }
 
-    /**
-     * @return a random string with len 4
-     */
     private static String generateCaptcha() {
         String charset = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
         StringBuilder random = new StringBuilder();

@@ -72,6 +72,7 @@ captcha:
   lines: true
 
 other:
+  
   # What inventory slot to give the map in. (between 0-8)
   inventory_slot: 4
 
@@ -86,6 +87,9 @@ other:
 
   # Blind the player while they are completing the captcha.
   blind_player: true
+
+  # Freeze the player while they are completing the captcha.
+  freeze_player: true
 
   # Allows the player to only complete the captcha once per server restart.
   cache: true
