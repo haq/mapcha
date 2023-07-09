@@ -1,5 +1,3 @@
-[![license](https://img.shields.io/github/license/mashape/apistatus.svg)](LICENSE)
-
 # mapcha
 
 Map based captcha plugin for your Minecraft server.
