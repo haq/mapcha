@@ -1,4 +1,5 @@
-<img alt="downloads" src="https://img.shields.io/github/downloads/haq/mapcha/total"> <img alt="size" src="https://img.shields.io/github/languages/code-size/haq/mapcha">
+![Spiget Downloads](https://img.shields.io/spiget/downloads/51630)
+![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/haq/mapcha)
 
 # mapcha
 
