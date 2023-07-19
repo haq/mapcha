@@ -1,3 +1,5 @@
+<img alt="downloads" src="https://img.shields.io/github/downloads/haq/mapcha/total"> <img alt="size" src="https://img.shields.io/github/languages/code-size/haq/mapcha">
+
 # mapcha
 
 Map based captcha plugin for your Minecraft server.
