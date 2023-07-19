@@ -1,5 +1,5 @@
-![Spiget Downloads](https://img.shields.io/spiget/downloads/51630)
-![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/haq/mapcha)
+![spiget downloads](https://img.shields.io/spiget/downloads/51630)
+![gitHub code size in bytes](https://img.shields.io/github/languages/code-size/haq/mapcha)
 
 # mapcha
 
